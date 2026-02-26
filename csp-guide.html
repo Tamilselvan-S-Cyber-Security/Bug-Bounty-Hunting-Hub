@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Guide - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <i class="fas fa-chevron-right"></i>
+            <span>CSP Guide</span>
+        </div>
+        <h1><i class="fas fa-shield-alt"></i> Content Security Policy</h1>
+        <p>Complete CSP explanation, directives, sources, and bypass techniques.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> What is CSP?</h2>
+                <p>Imagine your website is a <strong>house</strong>. JavaScript, images, CSS, iframes are <strong>people entering the house</strong>.</p>
+                <p><strong>Before CSP:</strong> Anyone can enter. If attacker injects &lt;script&gt;, browser runs it.</p>
+                <p><strong>After CSP:</strong> You put a <strong>security guard at the door</strong> with a <strong>rule list</strong>:</p>
+                <blockquote>"Only people from THESE places can enter. Everyone else → blocked"</blockquote>
+                <p>That rule list = <strong>Content Security Policy</strong></p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-gavel"></i> Who Enforces CSP?</h2>
+                <p>❌ NOT the server<br>❌ NOT JavaScript<br>✅ <strong>The browser itself</strong></p>
+                <p>Even if HTML injection exists, script tag exists, and payload is perfect — <strong>browser will refuse to run it if CSP says NO</strong>.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-paper-plane"></i> How CSP is Sent</h2>
+                <h3>Method 1: HTTP Header (STRONGEST)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>Content-Security-Policy: script-src 'self'</pre>
+                </div>
+
+                <h3>Method 2: HTML Meta Tag (WEAKER)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>&lt;meta http-equiv="Content-Security-Policy" content="script-src 'self'"&gt;</pre>
+                </div>
+                <p>⚠️ Meta CSP cannot protect everything and can be overridden by headers.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-ul"></i> CSP Directives</h2>
+                <table>
+                    <tr>
+                        <th>Directive</th>
+                        <th>Controls</th>
+                    </tr>
+                    <tr>
+                        <td><code>script-src</code></td>
+                        <td>&lt;script&gt;, inline JS, onclick, eval()</td>
+                    </tr>
+                    <tr>
+                        <td><code>default-src</code></td>
+                        <td>Fallback rule for all content types</td>
+                    </tr>
+                    <tr>
+                        <td><code>img-src</code></td>
+                        <td>&lt;img src=...&gt;</td>
+                    </tr>
+                    <tr>
+                        <td><code>style-src</code></td>
+                        <td>CSS files, inline &lt;style&gt;</td>
+                    </tr>
+                    <tr>
+                        <td><code>frame-src</code></td>
+                        <td>&lt;iframe src=...&gt;</td>
+                    </tr>
+                    <tr>
+                        <td><code>connect-src</code></td>
+                        <td>fetch, XMLHttpRequest, WebSocket</td>
+                    </tr>
+                    <tr>
+                        <td><code>object-src</code></td>
+                        <td>&lt;object&gt;, &lt;embed&gt;, &lt;applet&gt;</td>
+                    </tr>
+                    <tr>
+                        <td><code>base-uri</code></td>
+                        <td>&lt;base href&gt; — stops link rewriting</td>
+                    </tr>
+                    <tr>
+                        <td><code>form-action</code></td>
+                        <td>Where forms can submit</td>
+                    </tr>
+                    <tr>
+                        <td><code>frame-ancestors</code></td>
+                        <td>Who can embed THIS page (clickjacking)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-map-marker-alt"></i> CSP Sources</h2>
+                <table>
+                    <tr>
+                        <th>Source</th>
+                        <th>Meaning</th>
+                    </tr>
+                    <tr>
+                        <td><code>'self'</code></td>
+                        <td>Same domain only</td>
+                    </tr>
+                    <tr>
+                        <td><code>*</code></td>
+                        <td>Almost anywhere (dangerous)</td>
+                    </tr>
+                    <tr>
+                        <td><code>'none'</code></td>
+                        <td>Nothing allowed</td>
+                    </tr>
+                    <tr>
+                        <td><code>data:</code></td>
+                        <td>Base64 data (dangerous for JS)</td>
+                    </tr>
+                    <tr>
+                        <td><code>'unsafe-inline'</code></td>
+                        <td>Allow inline JS (VERY BAD)</td>
+                    </tr>
+                    <tr>
+                        <td><code>'unsafe-eval'</code></td>
+                        <td>Allow eval() (BAD)</td>
+                    </tr>
+                    <tr>
+                        <td><code>nonce-xyz</code></td>
+                        <td>Only scripts with matching nonce</td>
+                    </tr>
+                    <tr>
+                        <td><code>hash-abc</code></td>
+                        <td>Only scripts matching hash</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-ban"></i> Why Inline XSS Fails</h2>
+                <p>You injected: <code>">&lt;script&gt;alert(1)&lt;/script&gt;</code></p>
+                <p>CSP: <code>default-src 'self'</code></p>
+                <p>Where does it say inline scripts are blocked?</p>
+                <ul>
+                    <li>Inline scripts fall under <strong>script-src</strong></li>
+                    <li>script-src is <strong>not defined</strong></li>
+                    <li>Browser uses <strong>default-src</strong></li>
+                    <li>default-src = 'self'</li>
+                    <li>Inline script ≠ self</li>
+                    <li>❌ <strong>Blocked</strong></li>
+                </ul>
+                <p><strong>Key rule:</strong> If <code>unsafe-inline</code> is NOT present → inline JS is blocked. Always.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-unlock"></i> CSP Bypass Scenarios</h2>
+                <h3>Scenario 1: unsafe-inline Present</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>script-src 'self' 'unsafe-inline'</pre>
+                </div>
+                <p>➡️ CSP defeated by misconfiguration</p>
+
+                <h3>Scenario 2: Wildcard *</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>script-src *</pre>
+                </div>
+                <p>Attacker can host: <code>&lt;script src="https://evil.com/x.js"&gt;&lt;/script&gt;</code></p>
+
+                <h3>Scenario 3: JSONP Endpoint</h3>
+                <p>Whitelisted domain has JSONP:</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>&lt;script src="https://google.com/api?callback=alert"&gt;&lt;/script&gt;</pre>
+                </div>
+                <p>Browser trusts Google → XSS runs.</p>
+
+                <h3>Scenario 4: CDN with Old JS</h3>
+                <p>Old Angular/Prototype versions have known XSS gadgets. CSP allows the vulnerable library.</p>
+
+                <h3>Scenario 5: Open Redirect on Whitelisted Domain</h3>
+                <p>Browser only checks host, not final payload logic.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Bug Bounty Reality</h2>
+                <p>To report CSP-related XSS, you <strong>MUST</strong> show:</p>
+                <ul>
+                    <li>✔ Script execution</li>
+                    <li>✔ User interaction not required (usually)</li>
+                    <li>✔ CSP misconfiguration</li>
+                    <li>✔ Real impact</li>
+                </ul>
+                <p>❌ If you only have reflection, head injection, or meta injection — <strong>it will be rejected</strong>.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-external-link-alt"></i> Resources</h2>
+                <p><a href="https://cspbypass.com/" target="_blank" style="color: var(--accent-primary);">cspbypass.com</a> - CSP Bypass techniques</p>
+                <p><a href="https://github.com/renniepak/CSPBypass" target="_blank" style="color: var(--accent-primary);">github.com/renniepak/CSPBypass</a> - CSP Bypass guide</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

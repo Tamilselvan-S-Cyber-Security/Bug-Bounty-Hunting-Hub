@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuclei - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Nuclei</span>
+        </div>
+        <h1><i class="fas fa-rocket"></i> Nuclei Complete Cheatsheet</h1>
+        <p>Fast, customizable vulnerability scanner based on simple YAML-based templates.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-play"></i> 1. Basic Usage</h2>
+                <h3>Scan a single target</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u https://example.com</pre>
+                </div>
+
+                <h3>Scan multiple targets</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -l targets.txt</pre>
+                </div>
+
+                <h3>Resume interrupted scan</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -resume resume.cfg</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bullseye"></i> 2. Target Handling</h2>
+                <h3>Scan all IPs of a domain</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -sa</pre>
+                </div>
+
+                <h3>Force IPv6 / IPv4</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -iv 6</pre>
+                </div>
+
+                <h3>Exclude hosts</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -l hosts.txt -eh 127.0.0.1,internal.local</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-filter"></i> 6. Filtering (Most Important)</h2>
+                <h3>By severity</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -s high,critical</pre>
+                </div>
+
+                <h3>Exclude low/info</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -es info,low</pre>
+                </div>
+
+                <h3>By tags</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -tags xss,sqli</pre>
+                </div>
+
+                <h3>Exclude noisy tags</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -etags dos,fuzz</pre>
+                </div>
+
+                <h3>By template ID</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -id CVE-2023-*</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-file-export"></i> 7. Output & Reporting</h2>
+                <h3>JSON / JSONL</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -json-export out.json
+nuclei -u example.com -jle out.jsonl</pre>
+                </div>
+
+                <h3>Markdown report</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -me reports/</pre>
+                </div>
+
+                <h3>SARIF (for GitHub Security)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -se report.sarif</pre>
+                </div>
+
+                <h3>Silent mode (clean output)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -silent</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-robot"></i> 11. AI Mode</h2>
+                <h3>Auto scan (tech → vuln mapping)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -as</pre>
+                </div>
+
+                <h3>AI-generated template</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -u example.com -ai "detect exposed admin panels"</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bug"></i> 20. Real-World Bug Bounty Commands</h2>
+                <h3>High-signal scan</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -l alive.txt -s high,critical -silent</pre>
+                </div>
+
+                <h3>CVE-only scan</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -l hosts.txt -tags cve</pre>
+                </div>
+
+                <h3>XSS focused</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -l urls.txt -tags xss -dast</pre>
+                </div>
+
+                <h3>Recon → exploit chain</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>httpx -l subs.txt | nuclei -as</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-sync"></i> Update & Maintenance</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -up
+nuclei -ut</pre>
+                </div>
+                <p>Reset everything:</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -reset</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

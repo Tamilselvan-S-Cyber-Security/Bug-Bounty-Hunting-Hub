@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grey Box Testing - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Testing <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="testing-and-automations.html"><i class="fas fa-vial"></i> Testing Overview</a></li>
+                        <li><a href="whitebox.html"><i class="fas fa-box-open"></i> White Box Testing</a></li>
+                        <li><a href="blackbox.html"><i class="fas fa-box"></i> Black Box Testing</a></li>
+                        <li><a href="greybox.html"><i class="fas fa-adjust"></i> Grey Box Testing</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="testing-and-automations.html">Testing</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Grey Box Testing</span>
+        </div>
+        <h1><i class="fas fa-adjust"></i> Grey Box Testing</h1>
+        <p>Hybrid testing approach with partial knowledge of internal structure.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> What is Grey Box Testing?</h2>
+                <p>Grey Box Testing (also known as Gray Box Testing) is a software testing technique that combines elements of both White Box and Black Box testing. The tester has partial knowledge of the internal workings of the application, such as access to design documents, database schemas, or limited source code, while testing from an external user perspective.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-key"></i> Key Characteristics</h2>
+                <table>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>Knowledge Required</td>
+                        <td>Partial access to internal structure, design docs, database schema</td>
+                    </tr>
+                    <tr>
+                        <td>Testing Focus</td>
+                        <td>Both external behavior and internal data flow/logic</td>
+                    </tr>
+                    <tr>
+                        <td>Tester Profile</td>
+                        <td>Testers with some development/architectural knowledge</td>
+                    </tr>
+                    <tr>
+                        <td>Approach</td>
+                        <td>Combines user perspective with internal understanding</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-check"></i> Types of Grey Box Testing</h2>
+                <div class="step-card">
+                    <h3><span class="step-number">1</span> Matrix Testing</h3>
+                    <p>Examining status variables and runtime variables during program execution to identify unused or unoptimized variables.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">2</span> Pattern Testing</h3>
+                    <p>Analyzing historical data to identify patterns of defects and focusing testing on similar areas.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">3</span> Orthogonal Array Testing</h3>
+                    <p>Statistical testing approach for complex applications with multiple inputs and configurations.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">4</span> Regression Testing</h3>
+                    <p>Testing after code changes to ensure modifications haven't introduced new defects.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-database"></i> Database Testing in Grey Box</h2>
+                <p>Grey Box Testing is particularly effective for database testing where testers have knowledge of the database schema but test from the application interface:</p>
+                <ul class="command-list">
+                    <li><strong>Semantic Testing:</strong> Validate database mappings and front-end/back-end consistency</li>
+                    <li><strong>Atomicity:</strong> Verify transaction completeness (all or nothing)</li>
+                    <li><strong>Consistency:</strong> Ensure database remains valid after transactions</li>
+                    <li><strong>Isolation:</strong> Test concurrent transaction handling</li>
+                    <li><strong>Durability:</strong> Verify committed data survives system failures</li>
+                    <li><strong>Constraint Checking:</strong> Validate primary keys, foreign keys, and constraints</li>
+                    <li><strong>Data Integrity:</strong> Verify data accuracy and consistency</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Tools for Grey Box Testing</h2>
+                <table>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Category</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>Burp Suite</td>
+                        <td>Proxy/Scanner</td>
+                        <td>Web app testing with session handling</td>
+                    </tr>
+                    <tr>
+                        <td>Postman</td>
+                        <td>API Testing</td>
+                        <td>API testing with authentication</td>
+                    </tr>
+                    <tr>
+                        <td>SoapUI</td>
+                        <td>API Testing</td>
+                        <td>SOAP and REST API testing</td>
+                    </tr>
+                    <tr>
+                        <td>DBUnit</td>
+                        <td>Database</td>
+                        <td>Database unit testing framework</td>
+                    </tr>
+                    <tr>
+                        <td>Selenium</td>
+                        <td>Automation</td>
+                        <td>Browser automation testing</td>
+                    </tr>
+                    <tr>
+                        <td>JMeter</td>
+                        <td>Performance</td>
+                        <td>Load and performance testing</td>
+                    </tr>
+                    <tr>
+                        <td>Cucumber</td>
+                        <td>BDD</td>
+                        <td>Behavior-driven development testing</td>
+                    </tr>
+                    <tr>
+                        <td>REST Assured</td>
+                        <td>API Testing</td>
+                        <td>Java DSL for REST API testing</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-terminal"></i> Grey Box Testing Commands</h2>
+                <h3>API Testing</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># Test with authentication
+curl -X GET https://api.target.com/v1/users \
+  -H "Authorization: Bearer TOKEN" \
+  -H "Content-Type: application/json"
+
+# Test role-based access
+curl -X GET https://api.target.com/v1/admin/users \
+  -H "Authorization: Bearer USER_TOKEN"
+
+# Test data validation
+curl -X POST https://api.target.com/v1/users \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@test.com","role":"admin"}'</pre>
+                </div>
+
+                <h3>Database Testing</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># SQL Injection with partial knowledge
+' UNION SELECT username, password FROM users--
+' OR '1'='1' --
+' AND 1=2 UNION SELECT null, version()--
+
+# Time-based blind SQLi
+' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--
+
+# Error-based SQLi
+' AND extractvalue(1, concat(0x7e, (SELECT @@version)))--</pre>
+                </div>
+
+                <h3>Web Testing</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># Test hidden fields
+ffuf -u target.com/page -d "FUZZ=test" -w hidden-params.txt
+
+# Test with session cookies
+curl -X POST target.com/action \
+  -b "sessionid=VALUE; csrf_token=VALUE" \
+  -d "action=delete&id=123"
+
+# Bypass client-side validation
+curl -X POST target.com/api/submit \
+  -H "Content-Type: application/json" \
+  -d '{"amount":-100,"price":0}'</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-check-double"></i> Grey Box Testing Checklist</h2>
+                <ul class="command-list">
+                    <li><input type="checkbox"> Review system architecture and design documents</li>
+                    <li><input type="checkbox"> Analyze database schema and relationships</li>
+                    <li><input type="checkbox"> Test API endpoints with different authentication levels</li>
+                    <li><input type="checkbox"> Verify role-based access control (RBAC)</li>
+                    <li><input type="checkbox"> Test data flow between frontend and backend</li>
+                    <li><input type="checkbox"> Validate ORM queries and SQL generation</li>
+                    <li><input type="checkbox"> Test transaction handling and rollback mechanisms</li>
+                    <li><input type="checkbox"> Verify caching mechanisms and invalidation</li>
+                    <li><input type="checkbox"> Test session management and timeout handling</li>
+                    <li><input type="checkbox"> Validate input validation at all layers</li>
+                    <li><input type="checkbox"> Test business logic vulnerabilities</li>
+                    <li><input type="checkbox"> Verify audit logging functionality</li>
+                    <li><input type="checkbox"> Test integration points between modules</li>
+                    <li><input type="checkbox"> Validate configuration management</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-balance-scale"></i> Grey Box vs White Box vs Black Box</h2>
+                <table>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Black Box</th>
+                        <th>Grey Box</th>
+                        <th>White Box</th>
+                    </tr>
+                    <tr>
+                        <td>Internal Knowledge</td>
+                        <td>None</td>
+                        <td>Partial</td>
+                        <td>Full</td>
+                    </tr>
+                    <tr>
+                        <td>Test Basis</td>
+                        <td>Requirements</td>
+                        <td>Requirements + Design</td>
+                        <td>Code + Design</td>
+                    </tr>
+                    <tr>
+                        <td>Testers</td>
+                        <td>QA/Security Testers</td>
+                        <td>Testers + Developers</td>
+                        <td>Developers</td>
+                    </tr>
+                    <tr>
+                        <td>Time Required</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td>Low-Medium</td>
+                    </tr>
+                    <tr>
+                        <td>Code Coverage</td>
+                        <td>Unknown</td>
+                        <td>Partial</td>
+                        <td>Measurable</td>
+                    </tr>
+                    <tr>
+                        <td>Real-world Simulation</td>
+                        <td>Highest</td>
+                        <td>High</td>
+                        <td>Low</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Common Vulnerabilities Found</h2>
+                <table>
+                    <tr>
+                        <th>Vulnerability</th>
+                        <th>Discovery Method</th>
+                    </tr>
+                    <tr>
+                        <td>IDOR (Insecure Direct Object Reference)</td>
+                        <td>Modify IDs after analyzing URL patterns</td>
+                    </tr>
+                    <tr>
+                        <td>Business Logic Flaws</td>
+                        <td>Understand workflow then test edge cases</td>
+                    </tr>
+                    <tr>
+                        <td>Privilege Escalation</td>
+                        <td>Test with different role tokens</td>
+                    </tr>
+                    <tr>
+                        <td>Mass Assignment</td>
+                        <td>Add extra fields based on schema knowledge</td>
+                    </tr>
+                    <tr>
+                        <td>Timing Attacks</td>
+                        <td>Analyze response times for different inputs</td>
+                    </tr>
+                    <tr>
+                        <td>Race Conditions</td>
+                        <td>Send parallel requests to critical endpoints</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-lightbulb"></i> Best Practices</h2>
+                <ul class="command-list">
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Use design documents to identify critical test areas</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Leverage database schema for injection testing</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Test with multiple user roles and permissions</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Focus on integration points between components</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Test data consistency across frontend and backend</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Validate all API endpoints with proper authentication</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Use knowledge of tech stack to target specific vulnerabilities</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Combine automated scanning with manual testing</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span class="year">2026</span> Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

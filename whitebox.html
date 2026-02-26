@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White Box Testing - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Testing <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="testing-and-automations.html"><i class="fas fa-vial"></i> Testing Overview</a></li>
+                        <li><a href="whitebox.html"><i class="fas fa-box-open"></i> White Box Testing</a></li>
+                        <li><a href="blackbox.html"><i class="fas fa-box"></i> Black Box Testing</a></li>
+                        <li><a href="greybox.html"><i class="fas fa-adjust"></i> Grey Box Testing</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="testing-and-automations.html">Testing</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>White Box Testing</span>
+        </div>
+        <h1><i class="fas fa-box-open"></i> White Box Testing</h1>
+        <p>Testing with full knowledge of internal structure, design, and implementation.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> What is White Box Testing?</h2>
+                <p>White Box Testing (also known as Clear Box Testing, Glass Box Testing, or Structural Testing) is a testing technique that examines the internal structure, design, and coding of software to verify input-output flow and improve design, usability, and security. The tester has complete visibility into the application's internal workings.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-key"></i> Key Characteristics</h2>
+                <table>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>Knowledge Required</td>
+                        <td>Full access to source code, architecture, and design documents</td>
+                    </tr>
+                    <tr>
+                        <td>Testing Focus</td>
+                        <td>Internal logic, code structure, data flow, and control flow</td>
+                    </tr>
+                    <tr>
+                        <td>Tester Profile</td>
+                        <td>Developers, security analysts with programming knowledge</td>
+                    </tr>
+                    <tr>
+                        <td>Coverage</td>
+                        <td>Code coverage, path coverage, branch coverage</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-check"></i> Types of White Box Testing</h2>
+                <div class="step-card">
+                    <h3><span class="step-number">1</span> Unit Testing</h3>
+                    <p>Testing individual units or components of source code. Each unit is tested separately to ensure it works correctly.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">2</span> Integration Testing</h3>
+                    <p>Testing the interaction between integrated units/modules to detect interface defects.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">3</span> Penetration Testing (Code Review)</h3>
+                    <p>Manual or automated review of source code to find security vulnerabilities.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">4</span> Mutation Testing</h3>
+                    <p>Modifying code to check test suite robustness and effectiveness.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-code-branch"></i> Code Coverage Techniques</h2>
+                <ul class="command-list">
+                    <li><strong>Statement Coverage:</strong> Every line of code is executed at least once</li>
+                    <li><strong>Branch Coverage:</strong> Every decision branch (true/false) is executed</li>
+                    <li><strong>Path Coverage:</strong> All possible paths through the code are tested</li>
+                    <li><strong>Condition Coverage:</strong> Each boolean condition is evaluated as true and false</li>
+                    <li><strong>Function Coverage:</strong> Every function is called and executed</li>
+                    <li><strong>Loop Coverage:</strong> All loops are executed 0, 1, and multiple times</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Tools for White Box Testing</h2>
+                <table>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Category</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>JUnit/NUnit</td>
+                        <td>Unit Testing</td>
+                        <td>Framework for unit testing Java/.NET applications</td>
+                    </tr>
+                    <tr>
+                        <td>SonarQube</td>
+                        <td>Code Quality</td>
+                        <td>Static code analysis for bugs and vulnerabilities</td>
+                    </tr>
+                    <tr>
+                        <td>Checkmarx</td>
+                        <td>SAST</td>
+                        <td>Static Application Security Testing tool</td>
+                    </tr>
+                    <tr>
+                        <td>Fortify</td>
+                        <td>SAST</td>
+                        <td>Security code analysis and auditing</td>
+                    </tr>
+                    <tr>
+                        <td>Veracode</td>
+                        <td>SAST</td>
+                        <td>Automated security testing platform</td>
+                    </tr>
+                    <tr>
+                        <td>JaCoCo</td>
+                        <td>Coverage</td>
+                        <td>Java code coverage library</td>
+                    </tr>
+                    <tr>
+                        <td>Bandit</td>
+                        <td>SAST (Python)</td>
+                        <td>Security linter for Python code</td>
+                    </tr>
+                    <tr>
+                        <td>Brakeman</td>
+                        <td>SAST (Ruby)</td>
+                        <td>Security scanner for Ruby on Rails</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-terminal"></i> White Box Testing Commands</h2>
+                <h3>Static Analysis</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># SonarQube Scanner
+sonar-scanner -Dsonar.projectKey=myproject -Dsonar.sources=.
+
+# Bandit (Python Security)
+bandit -r /path/to/python/code
+
+# Brakeman (Rails Security)
+brakeman -A -w1 --format text
+
+# Semgrep (Multi-language)
+semgrep --config=auto .
+
+# CodeQL (GitHub Security)
+codeql database create --language=javascript /db
+codeql analyze /db --format=sarifv2.1.0 --output=results.sarif</pre>
+                </div>
+
+                <h3>Code Coverage</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># JaCoCo (Java)
+java -javaagent:jacocoagent.jar -jar myapp.jar
+
+# Coverage.py (Python)
+coverage run -m pytest
+coverage report
+coverage html
+
+# NYC (Node.js)
+nyc npm test
+nyc report --reporter=html</pre>
+                </div>
+
+                <h3>Unit Testing</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># JUnit (Java)
+mvn test
+
+# Pytest (Python)
+pytest -v --cov=myapp tests/
+
+# Jest (JavaScript)
+npm test -- --coverage
+
+# Go Testing
+go test -v -cover ./...</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-check-double"></i> White Box Testing Checklist</h2>
+                <ul class="command-list">
+                    <li><input type="checkbox"> Review all source code for security vulnerabilities</li>
+                    <li><input type="checkbox"> Check for hardcoded credentials and secrets</li>
+                    <li><input type="checkbox"> Verify input validation and sanitization</li>
+                    <li><input type="checkbox"> Test all conditional branches and paths</li>
+                    <li><input type="checkbox"> Review authentication and authorization logic</li>
+                    <li><input type="checkbox"> Check for SQL injection vulnerabilities</li>
+                    <li><input type="checkbox"> Verify secure cryptographic implementations</li>
+                    <li><input type="checkbox"> Test error handling and exception management</li>
+                    <li><input type="checkbox"> Review third-party dependencies</li>
+                    <li><input type="checkbox"> Ensure secure session management</li>
+                    <li><input type="checkbox"> Validate file upload functionality</li>
+                    <li><input type="checkbox"> Check for insecure deserialization</li>
+                    <li><input type="checkbox"> Review logging and audit mechanisms</li>
+                    <li><input type="checkbox"> Test API endpoints thoroughly</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Common Vulnerabilities Found</h2>
+                <table>
+                    <tr>
+                        <th>Vulnerability</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>Hardcoded Credentials</td>
+                        <td>Passwords/API keys in source code</td>
+                        <td><code>password = "admin123"</code></td>
+                    </tr>
+                    <tr>
+                        <td>SQL Injection</td>
+                        <td>Unsanitized user input in queries</td>
+                        <td><code>"SELECT * FROM users WHERE id = " + id</code></td>
+                    </tr>
+                    <tr>
+                        <td>XSS</td>
+                        <td>Unescaped output in templates</td>
+                        <td><code>&lt;div&gt;{{ user_input }}&lt;/div&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Insecure Crypto</td>
+                        <td>Weak encryption algorithms</td>
+                        <td><code>MD5, SHA1 for passwords</code></td>
+                    </tr>
+                    <tr>
+                        <td>Path Traversal</td>
+                        <td>Unsanitized file paths</td>
+                        <td><code>open(request.GET['file'])</code></td>
+                    </tr>
+                    <tr>
+                        <td>Command Injection</td>
+                        <td>Unsanitized system commands</td>
+                        <td><code>os.system("ping " + host)</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-lightbulb"></i> Best Practices</h2>
+                <ul class="command-list">
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Use static analysis tools in CI/CD pipeline</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Achieve at least 80% code coverage</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Regular security code reviews</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Use parameterized queries to prevent SQL injection</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Implement proper input validation at all entry points</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Use secure coding guidelines (OWASP, CERT)</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Regular dependency scanning and updates</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Implement proper error handling without information disclosure</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span class="year">2026</span> Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

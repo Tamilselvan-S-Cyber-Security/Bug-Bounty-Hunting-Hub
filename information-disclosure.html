@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Disclosure - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Information Disclosure</span>
+        </div>
+        <h1><i class="fas fa-eye"></i> Information Disclosure Testing</h1>
+        <p>Discover sensitive files and information leakage through archive analysis.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-cog"></i> Setup</h2>
+                <p>Replace <code>TARGET_DOMAIN</code> once and reuse everywhere:</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>export TARGET_DOMAIN=bmw.de</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-ol"></i> Information Disclosure Workflow</h2>
+
+                <h3>1. Fetch ALL Archived URLs (CDX)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>curl "https://web.archive.org/cdx/search/cdx?url=*.$TARGET_DOMAIN/*&collapse=urlkey&output=text&fl=original" > all_urls.txt</pre>
+                </div>
+
+                <h3>2. Normalize + Deduplicate URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat all_urls.txt | uro > all_urls_clean.txt</pre>
+                </div>
+
+                <h3>3. Extract Juicy/Sensitive File Extensions</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei '\.(pdf|doc|docx|xls|xlsx|csv|txt|log|bak|backup|old|zip|rar|7z|tar|gz|sql|db|env|ini|conf|config|yml|yaml|json|git)$' all_urls_clean.txt > juicy_files.txt</pre>
+                </div>
+
+                <h3>4. CDX Direct Filter (High Signal)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>curl "https://web.archive.org/cdx/search/cdx?url=*.$TARGET_DOMAIN/*&collapse=urlkey&output=text&fl=original&filter=original:.*\.(pdf|doc|docx|xls|xlsx|csv|txt|log|bak|zip|rar|sql|db|env|ini|yml|yaml|json|git)$" | tee cdx_filtered.txt</pre>
+                </div>
+
+                <h3>5. Identify LIVE vs DEAD URLs</h3>
+                <h4>Live URLs (200 / Redirects)</h4>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat all_urls_clean.txt | httpx -mc 200,301,302,307,308 -silent > alive.txt</pre>
+                </div>
+                <h4>Dead URLs (404 / Gone)</h4>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat all_urls_clean.txt | httpx -mc 404,410 -silent > dead.txt</pre>
+                </div>
+
+                <h3>6. GOLDEN METHOD - Recover Dead Files via Wayback</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat dead.txt | while read url; do
+  echo "https://web.archive.org/web/*/$url"
+done > dead_wayback.txt</pre>
+                </div>
+                <p>➡️ Open <code>dead_wayback.txt</code> in browser<br>➡️ Choose older snapshot<br>➡️ Download sensitive files</p>
+
+                <h3>7. Find Still-Downloadable Sensitive Files</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat juicy_files.txt | httpx -mc 200,206 -silent > juicy_alive.txt</pre>
+                </div>
+
+                <h3>8. PDF-Only Sensitive Keyword Scan (HIGH VALUE)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei '\.pdf$' cdx_filtered.txt | while read -r url; do
+  curl -s "$url" | pdftotext - - 2>/dev/null | \
+  grep -Eaiq '(confidential|internal|restricted|private|do not share|proprietary|invoice|salary|contract|agreement|identity|bank)' \
+  && echo "$url"
+done</pre>
+                </div>
+
+                <h3>9. JS Files (Secrets / Endpoints)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei '\.js$' alive.txt > js_files.txt</pre>
+                </div>
+
+                <h3>10. Robots / Sitemap (Historical)</h3>
+                <ul>
+                    <li><code>https://web.archive.org/web/*/TARGET_DOMAIN/robots.txt</code></li>
+                    <li><code>https://web.archive.org/web/*/TARGET_DOMAIN/sitemap.xml</code></li>
+                </ul>
+
+                <h3>11. Internal / Admin / Debug Paths</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei 'admin|internal|config|debug|test|backup|private|hidden|_admin|_config' alive.txt > internal_paths.txt</pre>
+                </div>
+
+                <h3>12. Parameters That May Leak Data</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei '\?|=|token|key|auth|session|id=' alive.txt > param_urls.txt</pre>
+                </div>
+
+                <h3>13. FINAL - Information Disclosure Candidates</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat juicy_alive.txt js_files.txt internal_paths.txt param_urls.txt | sort -u > info_disclosure_final.txt</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

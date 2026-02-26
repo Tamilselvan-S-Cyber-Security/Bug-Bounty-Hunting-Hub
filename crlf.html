@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRLF Injection - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>CRLF Injection</span>
+        </div>
+        <h1><i class="fas fa-code"></i> CRLF Injection</h1>
+        <p>Carriage Return Line Feed injection testing tools and commands.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> What is CRLF?</h2>
+                <p>Carriage Return (CR) and Line Feed (LF). It is a special, invisible sequence of two characters used in computer text to mark the end of a line and start a new one.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> CRLF Injection Tools</h2>
+
+                <h3>1. CRLFsuite</h3>
+                <p><strong>Requirement:</strong> URL file with parameters</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>python3 crlfsuite.py -u urls.txt</pre>
+                </div>
+
+                <h3>2. crlfuzz (Go-based)</h3>
+                <p><strong>Requirement:</strong> URL file with parameters</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>crlfuzz -l urls.txt</pre>
+                </div>
+
+                <h3>3. CRLF-Injection-Scanner</h3>
+                <p><strong>Requirement:</strong> URL file with parameters</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>python3 crlf.py -f urls.txt</pre>
+                </div>
+
+                <h3>4. Injectus</h3>
+                <p><strong>Requirements:</strong> URL file with parameters OR parameter file</p>
+                <h4>Command (URL file)</h4>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>python3 injectus.py -f urls.txt -t crlf</pre>
+                </div>
+                <h4>Command (Parameter file)</h4>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>python3 injectus.py -f params.txt -t crlf</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-table"></i> Summary</h2>
+                <table>
+                    <tr>
+                        <th>Tool</th>
+                        <th>URL File</th>
+                        <th>Parameter File</th>
+                    </tr>
+                    <tr>
+                        <td>CRLFsuite</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>crlfuzz</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>CRLF-Injection-Scanner</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>Injectus</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Common CRLF Payloads</h2>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Payload</th>
+                    </tr>
+                    <tr>
+                        <td>Basic</td>
+                        <td><code>%0d%0a</code></td>
+                    </tr>
+                    <tr>
+                        <td>Header Injection</td>
+                        <td><code>%0d%0aSet-Cookie:%20session=hacked</code></td>
+                    </tr>
+                    <tr>
+                        <td>XSS via CRLF</td>
+                        <td><code>%0d%0aContent-Length:%200%0d%0a%0d%0a&lt;script&gt;alert(1)&lt;/script&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>HTTP Response Splitting</td>
+                        <td><code>%0d%0aContent-Type:%20text/html%0d%0a%0d%0a&lt;h1&gt;Hacked&lt;/h1&gt;</code></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

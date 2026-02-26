@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDOR - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>IDOR</span>
+        </div>
+        <h1><i class="fas fa-id-card"></i> IDOR Parameter Finding</h1>
+        <p>Insecure Direct Object Reference (IDOR) testing methodology and commands.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-cogs"></i> Setup GF IDOR Pattern</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nano ~/.gf/idor.json</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-ol"></i> IDOR Testing Workflow</h2>
+
+                <h3>Step 1: Extract IDOR URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat alivewayback.txt | gf idor > idor_raw.txt</pre>
+                </div>
+
+                <h3>Step 2: Clean Valid URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -E "^https?://" idor_raw.txt | grep -v "<" | grep -v "#" | sort -u > idor_clean.txt</pre>
+                </div>
+
+                <h3>Step 3: Filter Object Parameters</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei "(id|uid|user|pid|rid|sid|account|profile)=" idor_clean.txt > idor_objects.txt</pre>
+                </div>
+
+                <h3>Step 4: Strict Object Values</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -E "=[0-9a-zA-Z_-]{2,}" idor_objects.txt > idor_objects_strict.txt</pre>
+                </div>
+
+                <h3>Step 5: Extract IDOR Parameter Names</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat idor_objects_strict.txt | unfurl --unique keys | sort -u > idor_params.txt</pre>
+                </div>
+
+                <h3>Step 6: Prepare FUZZ URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat idor_objects_strict.txt | qsreplace FUZZ | sort -u > idor_fuzz_ready.txt</pre>
+                </div>
+
+                <h3>Step 7: High-Confidence IDOR Filter</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ev "(search|q=|tag=|category|cmpid)" idor_fuzz_ready.txt > idor_high_confidence.txt</pre>
+                </div>
+
+                <h3>Step 8: ffuf IDOR Test</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>ffuf -u "https://target.com/path?param=FUZZ" -w ids.txt -mc 200 -fs 0</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Turbo Intruder Payload</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>1
+2
+3
+4
+5</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-terminal"></i> One-Line Full Pipeline</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat alivewayback.txt | gf idor | grep -E "^https?://" | grep -v "<" | grep -v "#" | grep -Ei "(id|uid|user|pid|rid|sid)=" | qsreplace FUZZ | sort -u > idor_final_ready.txt</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-puzzle-piece"></i> Burp Extensions</h2>
+                <p><a href="https://github.com/Quitten/Autorize" target="_blank" style="color: var(--accent-primary);">Autorize</a> - Automatic authorization detection</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

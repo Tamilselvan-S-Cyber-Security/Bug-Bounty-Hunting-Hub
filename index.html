@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Bug Bounty Hunting Hub - Complete security testing resource with payloads, tools, and methodologies">
+    <meta name="keywords" content="bug bounty, security, penetration testing, XSS, SQL injection, vulnerability">
+    <meta name="author" content="ZH5.club">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <title>Bug Bounty Hub - Complete Security Testing Reference</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="font-superpixel">Bug Bounty Hunting Hub</h1>
+            <p class="font-gomepixel">Complete bug hunting automation, cheat sheets, commands and methodologies - all in one place.</p>
+            <div class="hero-buttons">
+                <a href="#vulnerabilities" class="btn btn-primary">Explore Vulnerabilities</a>
+                <a href="payloads/index.html" class="btn btn-secondary">Payloads</a>
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number">25+</span>
+                <span class="stat-label">Vulnerabilities</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Tools</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">200+</span>
+                <span class="stat-label">Commands</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recon Section -->
+    <section id="recon" class="section">
+        <div class="container">
+            <h2 class="section-title">Reconnaissance</h2>
+            <p class="section-subtitle">Passive and active subdomain enumeration techniques</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
+                    <h3>Passive Subdomain Enumeration</h3>
+                    <ul class="command-list">
+                        <li><code>subfinder -d target.com -all -recursive -silent</code></li>
+                        <li><code>amass enum -passive -d target.com</code></li>
+                        <li><code>assetfinder --subs-only target.com</code></li>
+                        <li><code>findomain -t target.com -q</code></li>
+                    </ul>
+                    <button class="btn btn-small" onclick="copyToClipboard(this)">Copy Commands</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-broadcast-tower"></i></div>
+                    <h3>Active Subdomain Discovery</h3>
+                    <ul class="command-list">
+                        <li><code>amass enum -active -d target.com</code></li>
+                        <li><code>gobuster dns -d target.com -w wordlist.txt</code></li>
+                        <li><code>puredns bruteforce wordlist.txt target.com</code></li>
+                        <li><code>massdns -r resolvers.txt -t A subdomains.txt</code></li>
+                    </ul>
+                    <button class="btn btn-small" onclick="copyToClipboard(this)">Copy Commands</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-search"></i></div>
+                    <h3>Probing & Deep Recon</h3>
+                    <ul class="command-list">
+                        <li><code>httpx -l resolved_subs.txt -p 80,443,8080</code></li>
+                        <li><code>katana -list live_websites.txt -jc</code></li>
+                        <li><code>gau --subs target.com | anew urls.txt</code></li>
+                        <li><code>paramspider --domain target.com</code></li>
+                    </ul>
+                    <button class="btn btn-small" onclick="copyToClipboard(this)">Copy Commands</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-code"></i></div>
+                    <h3>JavaScript Analysis</h3>
+                    <ul class="command-list">
+                        <li><code>katana -list live_websites.txt -jc | grep \"\.js$\"</code></li>
+                        <li><code>cat js_all.txt | mantra</code></li>
+                        <li><code>python3 SecretFinder.py -i js_files.txt</code></li>
+                        <li><code>cat js_files.txt | gf api-keys</code></li>
+                    </ul>
+                    <button class="btn btn-small" onclick="copyToClipboard(this)">Copy Commands</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vulnerabilities Section -->
+    <section id="vulnerabilities" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title">Bug Hunting Vulnerabilities</h2>
+            <p class="section-subtitle">Comprehensive vulnerability testing methodologies</p>
+            
+            <div class="vuln-grid">
+                <a href="manual-open-redirect.html" class="vuln-card">
+                    <i class="fas fa-hand-pointer"></i>
+                    <span>Manual Open Redirect</span>
+                </a>
+                <a href="open-redirect.html" class="vuln-card">
+                    <i class="fas fa-robot"></i>
+                    <span>Automated Open Redirect</span>
+                </a>
+                <a href="xss.html" class="vuln-card">
+                    <i class="fas fa-bug"></i>
+                    <span>XSS</span>
+                </a>
+                <a href="blind-xss.html" class="vuln-card">
+                    <i class="fas fa-eye-slash"></i>
+                    <span>Blind XSS</span>
+                </a>
+                <a href="sqli.html" class="vuln-card">
+                    <i class="fas fa-database"></i>
+                    <span>SQL Injection</span>
+                </a>
+                <a href="idor.html" class="vuln-card">
+                    <i class="fas fa-id-card"></i>
+                    <span>IDOR</span>
+                </a>
+                <a href="lfi.html" class="vuln-card">
+                    <i class="fas fa-folder-open"></i>
+                    <span>LFI</span>
+                </a>
+                <a href="cmdi.html" class="vuln-card">
+                    <i class="fas fa-terminal"></i>
+                    <span>Command Injection</span>
+                </a>
+                <a href="subdomain-takeover.html" class="vuln-card">
+                    <i class="fas fa-globe"></i>
+                    <span>Subdomain Takeover</span>
+                </a>
+                <a href="cors.html" class="vuln-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>CORS</span>
+                </a>
+                <a href="csp-guide.html" class="vuln-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>CSP Guide</span>
+                </a>
+                <a href="xxe.html" class="vuln-card">
+                    <i class="fas fa-file-code"></i>
+                    <span>XXE</span>
+                </a>
+                <a href="ssti.html" class="vuln-card">
+                    <i class="fas fa-file-alt"></i>
+                    <span>SSTI</span>
+                </a>
+                <a href="crlf.html" class="vuln-card">
+                    <i class="fas fa-code"></i>
+                    <span>CRLF Injection</span>
+                </a>
+                <a href="ssrf-payloads.html" class="vuln-card">
+                    <i class="fas fa-server"></i>
+                    <span>SSRF Payloads</span>
+                </a>
+                <a href="race-conditions.html" class="vuln-card">
+                    <i class="fas fa-stopwatch"></i>
+                    <span>Race Conditions</span>
+                </a>
+                <a href="poisoning.html" class="vuln-card">
+                    <i class="fas fa-bolt"></i>
+                    <span>Cache Poisoning</span>
+                </a>
+                <a href="information-disclosure.html" class="vuln-card">
+                    <i class="fas fa-eye"></i>
+                    <span>Info Disclosure</span>
+                </a>
+                <a href="host-header-injection.html" class="vuln-card">
+                    <i class="fas fa-globe-americas"></i>
+                    <span>Host Header</span>
+                </a>
+                <a href="header-injection.html" class="vuln-card">
+                    <i class="fas fa-heading"></i>
+                    <span>Header Injection</span>
+                </a>
+                <a href="html-injection.html" class="vuln-card">
+                    <i class="fas fa-code"></i>
+                    <span>HTML Injection</span>
+                </a>
+                <a href="directory-traversal.html" class="vuln-card">
+                    <i class="fas fa-folder"></i>
+                    <span>Directory Traversal</span>
+                </a>
+                <a href="wordpress.html" class="vuln-card">
+                    <i class="fab fa-wordpress"></i>
+                    <span>WordPress</span>
+                </a>
+                <a href="spring-boot.html" class="vuln-card">
+                    <i class="fas fa-leaf"></i>
+                    <span>Spring Boot</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checklist Section -->
+    <section id="checklist" class="section">
+        <div class="container">
+            <h2 class="section-title">Bug Bounty Checklist</h2>
+            <p class="section-subtitle">Track your progress through comprehensive testing phases</p>
+            
+            <div class="checklist-container">
+                <div class="checklist-category">
+                    <h3><i class="fas fa-compass"></i> Recon & Setup</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Program rules & scope review</label></li>
+                        <li><label><input type="checkbox"> Target mapping & asset identification</label></li>
+                        <li><label><input type="checkbox"> Subdomain enumeration</label></li>
+                        <li><label><input type="checkbox"> Live host identification</label></li>
+                        <li><label><input type="checkbox"> Screenshot & visual recon</label></li>
+                        <li><label><input type="checkbox"> Port & service scanning</label></li>
+                        <li><label><input type="checkbox"> JavaScript file analysis</label></li>
+                        <li><label><input type="checkbox"> GitHub & source code recon</label></li>
+                        <li><label><input type="checkbox"> Cloud & storage recon</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-bolt"></i> Low-Hanging Fruits</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Subdomain Takeover</label></li>
+                        <li><label><input type="checkbox"> Security misconfigurations</label></li>
+                        <li><label><input type="checkbox"> Missing/weak HTTP security headers</label></li>
+                        <li><label><input type="checkbox"> robots.txt & sitemap analysis</label></li>
+                        <li><label><input type="checkbox"> Directory & file brute-forcing</label></li>
+                        <li><label><input type="checkbox"> Open redirect testing</label></li>
+                        <li><label><input type="checkbox"> IDOR (BOLA)</label></li>
+                        <li><label><input type="checkbox"> No rate-limit issues</label></li>
+                        <li><label><input type="checkbox"> File upload issues</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-bug"></i> Core Web Vulnerabilities</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Cross-Site Scripting (XSS)</label></li>
+                        <li><label><input type="checkbox"> Blind XSS</label></li>
+                        <li><label><input type="checkbox"> Content Security Policy bypass</label></li>
+                        <li><label><input type="checkbox"> Cross-Site Request Forgery (CSRF)</label></li>
+                        <li><label><input type="checkbox"> HTML injection</label></li>
+                        <li><label><input type="checkbox"> Host header injection</label></li>
+                        <li><label><input type="checkbox"> Local File Inclusion (LFI)</label></li>
+                        <li><label><input type="checkbox"> Server-Side Request Forgery (SSRF)</label></li>
+                        <li><label><input type="checkbox"> SQL injection (SQLi)</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-user-lock"></i> Authentication & Session</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Authentication bypass</label></li>
+                        <li><label><input type="checkbox"> Password reset vulnerabilities</label></li>
+                        <li><label><input type="checkbox"> Session fixation & hijacking</label></li>
+                        <li><label><input type="checkbox"> JWT vulnerabilities</label></li>
+                        <li><label><input type="checkbox"> 2FA / MFA misconfigurations</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="about">
+        <div class="container">
+            <p>&copy; <span class="year">2026</span> Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the <a href="https://zh5.club" target="_blank">ZH5.club</a></p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <!-- Welcome Popup Modal -->
+    <div id="welcomePopup" class="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closeWelcomePopup()">&times;</button>
+            <div class="popup-header">
+                <img src="logo/logo.png" alt="Bug Bounty Hub" class="popup-logo">
+                <h2>Welcome to Bug Bounty Hunting Hub</h2>
+            </div>
+            <div class="popup-body">
+                <p>Your complete security testing resource with payloads, tools, and methodologies.</p>
+                <div class="popup-social">
+                    <a href="https://www.instagram.com/zh5_official/" target="_blank" class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/zh5official/" target="_blank" class="social-icon linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://whatsapp.com/channel/0029Vb7gPitFCCoM116jcb04" target="_blank" class="social-icon whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://github.com/zh5official/" target="_blank" class="social-icon github">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <div class="popup-buttons">
+                    <a href="payloads/payloads.zip" class="btn btn-primary" download>
+                        <i class="fas fa-download"></i> Download Pyloads.zip
+                    </a>
+                    <a href="https://zh5.club" target="_blank" class="btn btn-secondary">
+                        <i class="fas fa-users"></i> Join for Club
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

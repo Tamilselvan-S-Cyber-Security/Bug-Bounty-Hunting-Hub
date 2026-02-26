@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* PDF Export Styles */
+        .pdf-export-btn {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+        
+        @media print {
+            /* Hide navigation and UI elements */
+            .navbar,
+            .nav-toggle,
+            .pdf-export-btn,
+            .breadcrumb,
+            .footer,
+            #toast {
+                display: none !important;
+            }
+            
+            /* Page layout */
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .page-header {
+                background: none !important;
+                color: black !important;
+                padding: 1rem 0 !important;
+                text-align: center;
+                border-bottom: 2px solid #333;
+            }
+            
+            .page-header h1 {
+                color: black !important;
+                font-size: 24pt;
+            }
+            
+            .page-header p {
+                color: #333 !important;
+                font-size: 12pt;
+            }
+            
+            /* Content cards */
+            .content-card {
+                background: white !important;
+                border: 1px solid #ddd;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin-bottom: 1rem;
+            }
+            
+            .content-card h2 {
+                color: black !important;
+                border-bottom: 1px solid #333;
+                font-size: 14pt;
+            }
+            
+            /* Checklist container */
+            .checklist-container {
+                background: white !important;
+            }
+            
+            .checklist-category {
+                background: white !important;
+                border: 1px solid #ddd;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin-bottom: 1rem;
+            }
+            
+            .checklist-category h3 {
+                color: black !important;
+                font-size: 12pt;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 0.5rem;
+            }
+            
+            /* Checklist items */
+            .checklist-items li {
+                color: black !important;
+                font-size: 10pt;
+                padding: 0.25rem 0;
+            }
+            
+            /* Show checkbox state visually */
+            input[type="checkbox"] {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 12px;
+                height: 12px;
+                border: 1px solid #333;
+                display: inline-block;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+            
+            input[type="checkbox"]:checked {
+                background: #333;
+                position: relative;
+            }
+            
+            input[type="checkbox"]:checked::after {
+                content: '\2713';
+                color: white;
+                font-size: 8px;
+                position: absolute;
+                top: -1px;
+                left: 2px;
+            }
+            
+            /* Ensure proper page breaks */
+            .checklist-category {
+                page-break-before: auto;
+            }
+            
+            section {
+                page-break-before: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Checklist</span>
+        </div>
+        <h1><i class="fas fa-tasks"></i> Bug Bounty Checklist</h1>
+        <p>Comprehensive testing checklist for thorough security assessment.</p>
+        <button class="btn btn-primary pdf-export-btn" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i> Export to PDF
+        </button>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-folder-open"></i> Folder Contents</h2>
+                <ul>
+                    <li><strong>checklist.txt</strong> - Complete bug bounty testing checklist</li>
+                </ul>
+            </div>
+
+            <div class="checklist-container">
+                <div class="checklist-category">
+                    <h3><i class="fas fa-compass"></i> Recon & Setup</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Program rules & scope review</label></li>
+                        <li><label><input type="checkbox"> Target mapping & asset identification</label></li>
+                        <li><label><input type="checkbox"> Subdomain enumeration</label></li>
+                        <li><label><input type="checkbox"> Live host identification</label></li>
+                        <li><label><input type="checkbox"> Screenshot & visual recon</label></li>
+                        <li><label><input type="checkbox"> Port & service scanning</label></li>
+                        <li><label><input type="checkbox"> JavaScript file analysis</label></li>
+                        <li><label><input type="checkbox"> GitHub & source code recon</label></li>
+                        <li><label><input type="checkbox"> Cloud & storage recon</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-bolt"></i> Low-Hanging Fruits</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Subdomain Takeover</label></li>
+                        <li><label><input type="checkbox"> Security misconfigurations</label></li>
+                        <li><label><input type="checkbox"> Missing/weak HTTP security headers</label></li>
+                        <li><label><input type="checkbox"> robots.txt & sitemap analysis</label></li>
+                        <li><label><input type="checkbox"> Directory & file brute-forcing</label></li>
+                        <li><label><input type="checkbox"> Open redirect testing</label></li>
+                        <li><label><input type="checkbox"> IDOR (BOLA)</label></li>
+                        <li><label><input type="checkbox"> No rate-limit issues</label></li>
+                        <li><label><input type="checkbox"> File upload issues</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-bug"></i> Core Web Vulnerabilities</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Cross-Site Scripting (XSS)</label></li>
+                        <li><label><input type="checkbox"> Blind XSS</label></li>
+                        <li><label><input type="checkbox"> Content Security Policy bypass</label></li>
+                        <li><label><input type="checkbox"> Cross-Site Request Forgery (CSRF)</label></li>
+                        <li><label><input type="checkbox"> HTML injection</label></li>
+                        <li><label><input type="checkbox"> Host header injection</label></li>
+                        <li><label><input type="checkbox"> Local File Inclusion (LFI)</label></li>
+                        <li><label><input type="checkbox"> Server-Side Request Forgery (SSRF)</label></li>
+                        <li><label><input type="checkbox"> SQL injection (SQLi)</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-user-lock"></i> Authentication & Session</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> Authentication bypass</label></li>
+                        <li><label><input type="checkbox"> Password reset vulnerabilities</label></li>
+                        <li><label><input type="checkbox"> Session fixation & hijacking</label></li>
+                        <li><label><input type="checkbox"> JWT vulnerabilities</label></li>
+                        <li><label><input type="checkbox"> 2FA / MFA misconfigurations</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-network-wired"></i> API & Modern Attack Surface</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> REST API testing</label></li>
+                        <li><label><input type="checkbox"> GraphQL vulnerabilities</label></li>
+                        <li><label><input type="checkbox"> WebSocket testing</label></li>
+                        <li><label><input type="checkbox"> gRPC testing</label></li>
+                        <li><label><input type="checkbox"> Mobile API analysis</label></li>
+                    </ul>
+                </div>
+
+                <div class="checklist-category">
+                    <h3><i class="fas fa-flask"></i> Advanced & Specialized</h3>
+                    <ul class="checklist-items">
+                        <li><label><input type="checkbox"> XXE injection</label></li>
+                        <li><label><input type="checkbox"> SSTI (Template Injection)</label></li>
+                        <li><label><input type="checkbox"> XPath injection</label></li>
+                        <li><label><input type="checkbox"> LDAP injection</label></li>
+                        <li><label><input type="checkbox"> NoSQL injection</label></li>
+                        <li><label><input type="checkbox"> Command injection</label></li>
+                        <li><label><input type="checkbox"> Deserialization attacks</label></li>
+                        <li><label><input type="checkbox"> Race conditions</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

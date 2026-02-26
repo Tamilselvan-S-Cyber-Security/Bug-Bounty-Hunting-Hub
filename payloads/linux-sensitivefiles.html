@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Sensitive Files - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../payloads.html" class="nav-link">Payloads</a></li>
+                <li><a href="index.html" class="nav-link active">Payloads Folder</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="../payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>linux-sensitivefiles.txt</span>
+        </div>
+        <h1><i class="fab fa-linux"></i> Linux Sensitive Files</h1>
+        <p>Common sensitive file paths for LFI/Path Traversal testing.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-file-alt"></i> File Contents</h2>
+                <div class="code-block" style="max-height: 600px; overflow-y: auto;">
+                    <button class="copy-btn">Copy All</button>
+                    <pre id="file-content">/etc/aliases
+/etc/apache2/apache2.conf
+/etc/apache2/httpd.conf
+/etc/apt/sources.list
+/etc/dovecot/dovecot.conf
+/etc/environment
+/etc/group
+/etc/gshadow
+/etc/hostname
+/etc/hosts
+/etc/hosts.allow
+/etc/hosts.deny
+/etc/httpd/httpd.conf
+/etc/mail/aliases
+/etc/mail/sendmail.cf
+/etc/mime.types
+/etc/mongodb.conf
+/etc/my.cnf
+/etc/mysql/my.cnf
+/etc/network/interfaces
+/etc/nginx/nginx.conf
+/etc/nsswitch.conf
+/etc/passwd
+/etc/php/7.4/apache2/php.ini
+/etc/php/7.4/cli/php.ini
+/etc/php/7.4/fpm/php.ini
+/etc/php.ini
+/etc/postfix/main.cf
+/etc/redis/redis.conf
+/etc/resolv.conf
+/etc/samba/smb.conf
+/etc/shadow
+/etc/ssh/id_dsa
+/etc/ssh/id_ecdsa
+/etc/ssh/id_ed25519
+/etc/ssh/id_rsa
+/etc/ssh/known_hosts
+/etc/ssh/ssh_config
+/etc/ssh/sshd_config
+/etc/sysctl.conf
+/root/.bash_history
+/root/.my.cnf
+/proc/self/environ
+/proc/version
+/proc/cmdline
+/proc/sched_debug
+/proc/mounts
+/proc/net/arp
+/proc/net/route
+/proc/net/tcp
+/proc/net/udp
+/var/log/auth.log
+/var/log/secure
+/var/log/boot.log
+/var/log/cron
+/var/log/dmesg
+/var/log/lastlog
+/var/log/wtmp
+/var/log/btmp
+/var/log/httpd/access_log</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related</h2>
+                <a href="../linux-sensitive-files.html" class="btn btn-primary">Linux Files Main Page</a>
+                <a href="../payloads-lfi.html" class="btn btn-secondary" style="margin-left: 0.5rem;">LFI Payloads</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="../script.js"></script>
+</body>
+</html>

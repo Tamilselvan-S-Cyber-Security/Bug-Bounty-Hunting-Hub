@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Conditions - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Race Conditions</span>
+        </div>
+        <h1><i class="fas fa-stopwatch"></i> Race Conditions</h1>
+        <p>Race condition testing methodology using Turbo Intruder and requests-racer.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Tool 1: Turbo Intruder (Burp Suite)</h2>
+                <h3>Methodology (Exact)</h3>
+                <ol>
+                    <li>Intercept request in Burp Proxy</li>
+                    <li>Send to Turbo Intruder</li>
+                    <li>Use same request multiple times</li>
+                </ol>
+
+                <h3>Turbo Intruder Script (FINAL)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>def queueRequests(target, wordlists):
+    engine = Engine.CONCURRENT
+    for i in range(40):
+        target.queue(target.req, engine=engine)
+
+def handleResponse(req, interesting):
+    table.add(req)</pre>
+                </div>
+
+                <h3>Run</h3>
+                <ul>
+                    <li>Engine: <code>CONCURRENT</code></li>
+                    <li>Threads: <code>30-50</code></li>
+                    <li>Fire</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Tool 2: requests-racer</h2>
+                <h3>Requirement</h3>
+                <p>Raw HTTP request file</p>
+
+                <h3>request.txt Example</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>POST /api/redeem HTTP/1.1
+Host: target.com
+Content-Type: application/json
+Cookie: session=XYZ
+
+{"coupon":"FREE100"}</pre>
+                </div>
+
+                <h3>Run (FINAL COMMAND)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>requests-racer request.txt -n 40</pre>
+                </div>
+
+                <h3>Faster (No Delay)</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>requests-racer request.txt -n 50 --delay 0</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-table"></i> TL;DR</h2>
+                <table>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Requirement</th>
+                    </tr>
+                    <tr>
+                        <td>Turbo Intruder</td>
+                        <td>Same POST request</td>
+                    </tr>
+                    <tr>
+                        <td>requests-racer</td>
+                        <td>request.txt</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-lightbulb"></i> Common Race Condition Targets</h2>
+                <ul>
+                    <li>Coupon/redeem endpoints (multiple uses)</li>
+                    <li>Money transfer (double spend)</li>
+                    <li>Like/upvote (multiple counts)</li>
+                    <li>Account creation (duplicate accounts)</li>
+                    <li>Password reset (token reuse)</li>
+                    <li>Checkout/payment (price manipulation)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Debugger - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Testing <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="testing-and-automations.html"><i class="fas fa-vial"></i> Testing Overview</a></li>
+                        <li><a href="whitebox.html"><i class="fas fa-box-open"></i> White Box Testing</a></li>
+                        <li><a href="blackbox.html"><i class="fas fa-box"></i> Black Box Testing</a></li>
+                        <li><a href="greybox.html"><i class="fas fa-adjust"></i> Grey Box Testing</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                        <li><a href="code-debugger-website.html"><i class="fas fa-bug"></i> Code Debugger</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="#">Tools</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Code Debugger</span>
+        </div>
+        <h1><i class="fas fa-bug"></i> Website Code Debugger</h1>
+        <p>Analyze, debug, and download website source code for security research.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-globe"></i> Enter Website URL</h2>
+                <div class="url-input-container">
+                    <input type="url" id="websiteUrl" class="url-input" placeholder="https://example.com" required>
+                    <button id="fetchBtn" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Fetch Source Code
+                    </button>
+                </div>
+                <div class="options-container">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fetchAssets" checked>
+                        <span>Include CSS & JavaScript files</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fetchImages">
+                        <span>Include Images</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="content-card" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2><i class="fas fa-code"></i> Source Code Analysis</h2>
+                    <div class="results-actions">
+                        <button id="downloadZipBtn" class="btn btn-primary">
+                            <i class="fas fa-file-archive"></i> Download as ZIP
+                        </button>
+                        <button id="clearBtn" class="btn btn-secondary">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="file-tabs" id="fileTabs">
+                    <button class="tab-btn active" data-file="html">HTML</button>
+                    <button class="tab-btn" data-file="css">CSS</button>
+                    <button class="tab-btn" data-file="js">JavaScript</button>
+                </div>
+
+                <div class="code-preview-container">
+                    <div class="code-stats" id="codeStats"></div>
+                    <div class="code-content" id="codeContent">
+                        <pre><code id="codeDisplay"></code></pre>
+                    </div>
+                </div>
+
+                <div class="security-analysis" id="securityAnalysis">
+                    <h3><i class="fas fa-shield-alt"></i> Security Analysis</h3>
+                    <ul id="securityFindings"></ul>
+                </div>
+
+                <div class="file-list-container" id="fileListContainer">
+                    <h3><i class="fas fa-folder-open"></i> Files Retrieved</h3>
+                    <ul class="file-list" id="fileList"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span class="year">2026</span> Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Code Debugger Functionality
+        (function() {
+            const websiteUrl = document.getElementById('websiteUrl');
+            const fetchBtn = document.getElementById('fetchBtn');
+            const downloadZipBtn = document.getElementById('downloadZipBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const resultsSection = document.getElementById('resultsSection');
+            const codeDisplay = document.getElementById('codeDisplay');
+            const fileTabs = document.getElementById('fileTabs');
+            const fileList = document.getElementById('fileList');
+            const securityFindings = document.getElementById('securityFindings');
+            const codeStats = document.getElementById('codeStats');
+
+            let fetchedData = {
+                html: '',
+                css: [],
+                js: [],
+                images: [],
+                allFiles: []
+            };
+
+            // Fetch source code
+            fetchBtn.addEventListener('click', async () => {
+                const url = websiteUrl.value.trim();
+                if (!url) {
+                    showToast('Please enter a valid URL');
+                    return;
+                }
+
+                fetchBtn.disabled = true;
+                fetchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching...';
+
+                try {
+                    // Use a proxy to bypass CORS
+                    const proxyUrl = 'https://api.allorigins.win/get?url=';
+                    const response = await fetch(proxyUrl + encodeURIComponent(url));
+                    const data = await response.json();
+
+                    if (data.contents) {
+                        fetchedData.html = data.contents;
+                        fetchedData.allFiles = [{ name: 'index.html', content: data.contents, type: 'html' }];
+
+                        // Parse and extract resources
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data.contents, 'text/html');
+
+                        // Extract CSS files
+                        const cssLinks = doc.querySelectorAll('link[rel="stylesheet"]');
+                        cssLinks.forEach(link => {
+                            const href = link.getAttribute('href');
+                            if (href) {
+                                fetchedData.css.push(resolveUrl(url, href));
+                                fetchedData.allFiles.push({ name: href.split('/').pop() || 'style.css', url: resolveUrl(url, href), type: 'css' });
+                            }
+                        });
+
+                        // Extract JS files
+                        const jsScripts = doc.querySelectorAll('script[src]');
+                        jsScripts.forEach(script => {
+                            const src = script.getAttribute('src');
+                            if (src) {
+                                fetchedData.js.push(resolveUrl(url, src));
+                                fetchedData.allFiles.push({ name: src.split('/').pop() || 'script.js', url: resolveUrl(url, src), type: 'js' });
+                            }
+                        });
+
+                        // Extract inline CSS
+                        const styleTags = doc.querySelectorAll('style');
+                        styleTags.forEach((style, index) => {
+                            if (style.textContent) {
+                                fetchedData.allFiles.push({ 
+                                    name: `inline-style-${index + 1}.css`, 
+                                    content: style.textContent, 
+                                    type: 'css' 
+                                });
+                            }
+                        });
+
+                        // Extract inline JS
+                        const scriptTags = doc.querySelectorAll('script:not([src])');
+                        scriptTags.forEach((script, index) => {
+                            if (script.textContent) {
+                                fetchedData.allFiles.push({ 
+                                    name: `inline-script-${index + 1}.js`, 
+                                    content: script.textContent, 
+                                    type: 'js' 
+                                });
+                            }
+                        });
+
+                        displayResults();
+                        analyzeSecurity(data.contents);
+                        showToast('Source code fetched successfully!');
+                    }
+                } catch (error) {
+                    showToast('Error fetching source code. Please try again.');
+                    console.error('Fetch error:', error);
+                } finally {
+                    fetchBtn.disabled = false;
+                    fetchBtn.innerHTML = '<i class="fas fa-download"></i> Fetch Source Code';
+                }
+            });
+
+            // Resolve relative URLs
+            function resolveUrl(base, relative) {
+                if (relative.startsWith('http')) return relative;
+                if (relative.startsWith('//')) return 'https:' + relative;
+                const baseUrl = new URL(base);
+                if (relative.startsWith('/')) return baseUrl.origin + relative;
+                return baseUrl.href.replace(/\/[^\/]*$/, '/') + relative;
+            }
+
+            // Display results
+            function displayResults() {
+                resultsSection.style.display = 'block';
+                
+                // Display HTML by default
+                displayCode(fetchedData.html, 'html');
+
+                // Update file list
+                updateFileList();
+
+                // Update stats
+                const lines = fetchedData.html.split('\n').length;
+                const size = new Blob([fetchedData.html]).size;
+                codeStats.innerHTML = `
+                    <span><i class="fas fa-file-code"></i> ${fetchedData.allFiles.length} files</span>
+                    <span><i class="fas fa-align-left"></i> ${lines} lines</span>
+                    <span><i class="fas fa-weight-hanging"></i> ${formatBytes(size)}</span>
+                `;
+
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Display code with syntax highlighting
+            function displayCode(code, type) {
+                codeDisplay.textContent = code;
+                codeDisplay.className = `language-${type}`;
+            }
+
+            // Update file list
+            function updateFileList() {
+                fileList.innerHTML = '';
+                fetchedData.allFiles.forEach((file, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <i class="fas fa-${getFileIcon(file.type)}"></i>
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-type">${file.type.toUpperCase()}</span>
+                    `;
+                    li.addEventListener('click', () => {
+                        const content = file.content || '/* External file - content not loaded */';
+                        displayCode(content, file.type);
+                        updateActiveTab(file.type);
+                    });
+                    fileList.appendChild(li);
+                });
+            }
+
+            // Get file icon based on type
+            function getFileIcon(type) {
+                switch(type) {
+                    case 'html': return 'html5';
+                    case 'css': return 'css3';
+                    case 'js': return 'js';
+                    case 'image': return 'image';
+                    default: return 'file';
+                }
+            }
+
+            // Format bytes
+            function formatBytes(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            // Tab switching
+            fileTabs.addEventListener('click', (e) => {
+                if (e.target.classList.contains('tab-btn')) {
+                    const fileType = e.target.dataset.file;
+                    updateActiveTab(fileType);
+                    
+                    let content = '';
+                    switch(fileType) {
+                        case 'html':
+                            content = fetchedData.html;
+                            break;
+                        case 'css':
+                            content = fetchedData.allFiles
+                                .filter(f => f.type === 'css')
+                                .map(f => f.content || `/* ${f.name} - External file */`)
+                                .join('\n\n');
+                            break;
+                        case 'js':
+                            content = fetchedData.allFiles
+                                .filter(f => f.type === 'js')
+                                .map(f => f.content || `/* ${f.name} - External file */`)
+                                .join('\n\n');
+                            break;
+                    }
+                    displayCode(content || '/* No content available */', fileType);
+                }
+            });
+
+            function updateActiveTab(type) {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.file === type) btn.classList.add('active');
+                });
+            }
+
+            // Security analysis
+            function analyzeSecurity(html) {
+                const findings = [];
+                const lowerHtml = html.toLowerCase();
+
+                // Check for common security issues
+                if (lowerHtml.includes('password') || lowerHtml.includes('passwd')) {
+                    findings.push('<span class="warning"><i class="fas fa-exclamation-triangle"></i> Potential hardcoded passwords found</span>');
+                }
+                if (lowerHtml.includes('api_key') || lowerHtml.includes('apikey')) {
+                    findings.push('<span class="warning"><i class="fas fa-exclamation-triangle"></i> Potential API keys exposed</span>');
+                }
+                if (lowerHtml.includes('secret') || lowerHtml.includes('token')) {
+                    findings.push('<span class="warning"><i class="fas fa-exclamation-triangle"></i> Potential secrets/tokens found</span>');
+                }
+                if (!lowerHtml.includes('csrf') && lowerHtml.includes('form')) {
+                    findings.push('<span class="info"><i class="fas fa-info-circle"></i> Forms without CSRF protection detected</span>');
+                }
+                if (lowerHtml.includes('eval(') || lowerHtml.includes('innerhtml')) {
+                    findings.push('<span class="warning"><i class="fas fa-exclamation-triangle"></i> Potentially dangerous JavaScript functions</span>');
+                }
+                if (lowerHtml.includes('http://') && !lowerHtml.includes('https://')) {
+                    findings.push('<span class="info"><i class="fas fa-info-circle"></i> Insecure HTTP links found</span>');
+                }
+
+                if (findings.length === 0) {
+                    findings.push('<span class="success"><i class="fas fa-check-circle"></i> No obvious security issues detected</span>');
+                }
+
+                securityFindings.innerHTML = findings.map(f => `<li>${f}</li>`).join('');
+            }
+
+            // Download as ZIP
+            downloadZipBtn.addEventListener('click', async () => {
+                if (fetchedData.allFiles.length === 0) {
+                    showToast('No files to download');
+                    return;
+                }
+
+                downloadZipBtn.disabled = true;
+                downloadZipBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating ZIP...';
+
+                try {
+                    const zip = new JSZip();
+                    const folderName = websiteUrl.value.replace(/https?:\/\//, '').replace(/[^a-z0-9]/gi, '_');
+                    const folder = zip.folder(folderName);
+
+                    // Add all files to ZIP
+                    fetchedData.allFiles.forEach(file => {
+                        const content = file.content || `/* ${file.name} - External file, content not loaded */`;
+                        folder.file(file.name, content);
+                    });
+
+                    // Generate and download
+                    const blob = await zip.generateAsync({ type: 'blob' });
+                    saveAs(blob, `${folderName}_source_code.zip`);
+                    showToast('ZIP file downloaded successfully!');
+                } catch (error) {
+                    showToast('Error creating ZIP file');
+                    console.error('ZIP error:', error);
+                } finally {
+                    downloadZipBtn.disabled = false;
+                    downloadZipBtn.innerHTML = '<i class="fas fa-file-archive"></i> Download as ZIP';
+                }
+            });
+
+            // Clear results
+            clearBtn.addEventListener('click', () => {
+                fetchedData = { html: '', css: [], js: [], images: [], allFiles: [] };
+                resultsSection.style.display = 'none';
+                websiteUrl.value = '';
+                showToast('Results cleared');
+            });
+
+            // Toast notification override for this page
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                if (toast) {
+                    toast.textContent = message;
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 3000);
+                }
+            }
+        })();
+    </script>
+
+    <style>
+        .url-input-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .options-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            accent-color: var(--accent-primary);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .file-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .code-preview-container {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .code-stats {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .code-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-content {
+            max-height: 500px;
+            overflow: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            padding: 1.5rem;
+            background: transparent;
+        }
+
+        .code-content code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .security-analysis {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .security-analysis h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .security-analysis ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .security-analysis li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .security-analysis li:last-child {
+            border-bottom: none;
+        }
+
+        .security-analysis .warning {
+            color: #FF6B6B;
+        }
+
+        .security-analysis .info {
+            color: #4ECDC4;
+        }
+
+        .security-analysis .success {
+            color: #22C55E;
+        }
+
+        .file-list-container {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            padding: 1.5rem;
+        }
+
+        .file-list-container h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .file-list {
+            list-style: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .file-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .file-list li:hover {
+            background: var(--bg-primary);
+        }
+
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+
+        .file-list i {
+            color: var(--accent-primary);
+            width: 20px;
+        }
+
+        .file-name {
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .file-type {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .url-input-container {
+                flex-direction: column;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .results-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .code-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .file-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+</body>
+</html>

