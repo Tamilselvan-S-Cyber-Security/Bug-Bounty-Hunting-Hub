@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../logo/logo.png" alt="Bug Bounty Hub Logo" width="120">
+  <img src="./logo/logo.png" alt="Bug Bounty Hub Logo" width="120">
 </p>
 
 # Bug Bounty Hunting Hub
