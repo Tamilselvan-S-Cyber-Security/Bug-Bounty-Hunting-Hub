@@ -48,29 +48,37 @@ document.querySelectorAll('.nav-link').forEach(link => {
 });
 
 // Dropdown toggle for mobile
-if (dropdowns && dropdowns.length) {
-    dropdowns.forEach(dropdown => {
+function bindMobileDropdownToggles() {
+    const currentDropdowns = document.querySelectorAll('.dropdown');
+    if (!currentDropdowns || !currentDropdowns.length) return;
+
+    currentDropdowns.forEach(dropdown => {
+        if (dropdown.dataset && dropdown.dataset.mobileBound === 'true') return;
+
         const toggleLink = dropdown.querySelector(':scope > a');
-        if (toggleLink) {
-            toggleLink.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Close other dropdowns
-                    dropdowns.forEach(other => {
-                        if (other !== dropdown) {
-                            other.classList.remove('active');
-                        }
-                    });
-                    
-                    // Toggle current dropdown
-                    dropdown.classList.toggle('active');
-                }
-            });
-        }
+        if (!toggleLink) return;
+
+        toggleLink.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const latestDropdowns = document.querySelectorAll('.dropdown');
+                latestDropdowns.forEach(other => {
+                    if (other !== dropdown) {
+                        other.classList.remove('active');
+                    }
+                });
+
+                dropdown.classList.toggle('active');
+            }
+        });
+
+        dropdown.dataset.mobileBound = 'true';
     });
 }
+
+bindMobileDropdownToggles();
 
 // Active Navigation Link on Scroll
 const sections = document.querySelectorAll('section[id]');
@@ -331,9 +339,7 @@ document.addEventListener('keydown', (e) => {
         if (navMenu) {
             navMenu.classList.remove('active');
         }
-        if (dropdowns && dropdowns.length) {
-            dropdowns.forEach(d => d.classList.remove('active'));
-        }
+        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
     }
 });
 
@@ -342,6 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ensureChecklistNavLink();
     ensureTestingNavLink();
     ensureCodeDebuggerNavLink();
+    bindMobileDropdownToggles();
     updateActiveNav();
     updateProgress();
     updateFooterFormat();
@@ -617,6 +624,8 @@ function ensureTestingNavLink() {
             menu.appendChild(testingDropdown);
         }
     }
+
+    bindMobileDropdownToggles();
 }
 
 // Ensure Code Debugger link exists in Tools dropdown
