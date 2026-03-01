@@ -9,7 +9,7 @@
  
  [![Website](https://img.shields.io/badge/Website-Visit-FFB000?style=for-the-badge&logo=googlechrome&logoColor=white)](https://tamilselvan-official.web.app/)
  [![GitHub](https://img.shields.io/badge/GitHub-Profile-111827?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Tamilselvan-S-Cyber-Security)
- [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/tamilselvan-s)
+ [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://in.linkedin.com/in/tamil-selvan-383618304)
 
 ## About This Collection
 
@@ -138,7 +138,7 @@ This collection is provided for educational and authorized security testing purp
   <a href="https://www.instagram.com/zh5_official/">
     <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram">
   </a>
-  <a href="https://www.linkedin.com/in/zh5official/">
+  <a href="https://www.linkedin.com/company/zh5/">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
   </a>
   <a href="https://whatsapp.com/channel/0029Vb7gPitFCCoM116jcb04">
